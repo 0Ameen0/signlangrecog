@@ -9,4 +9,4 @@ class userreg(forms.ModelForm):
 class userlog(forms.ModelForm):
   class Meta:
     model=user_log
-    fields = ['Email','password']
+    fields = ['Email','Password']

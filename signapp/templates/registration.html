@@ -8,7 +8,8 @@
 <body>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_p }} 
+    {{ login.as_p }}
     <button type="submit">register</button>
   </form>
   {% if messages %}

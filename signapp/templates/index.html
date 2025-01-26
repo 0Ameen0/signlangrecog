@@ -107,13 +107,14 @@ https://templatemo.com/tm-576-snapx-photography
         <!-- Username & Password Login form -->
         <div class="user_login">
             <form action="" method="post">
-                <label>Email / Username</label>
+              {% csrf_token %}
+                <!-- <label>Email / Username</label>
                 <input name="username" type="text" id="username" />
               <br />
 
                 <label>Password</label>
                 <input name="password" type="password" id="password" />
-              <br />
+              <br /> -->
 
                 <div class="checkbox">
                     <input id="remember" type="checkbox" />
