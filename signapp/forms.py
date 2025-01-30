@@ -10,3 +10,7 @@ class userlog(forms.ModelForm):
   class Meta:
     model=user_log
     fields = ['Email','Password']
+
+class logincheck(forms.Form):
+    Email = forms.EmailField()
+    Password = forms.CharField(max_length='100',widget=forms.PasswordInput)

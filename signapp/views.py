@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .forms import userreg,userlog
+from .forms import userreg,userlog,logincheck
 from django.contrib import messages
 from .models import user_reg,user_log
 # Create your views here.
@@ -10,9 +10,6 @@ def index(request):
 
 def admin(request):
     return render(request,"admin.html")
-
-def login(request):
-    return render(request,"login.html")
 
 def UserReg(request):
      if request.method=="POST":
@@ -33,7 +30,7 @@ def UserReg(request):
 
 def UserLogin(request):
     if request.method=="POST":
-        form=userlog(request.POST)
+        form=logincheck(request.POST)
         if form.is_valid():
             email=form.cleaned_data['Email']
             password=form.cleaned_data['Password']
@@ -41,7 +38,7 @@ def UserLogin(request):
                 user=user_log.objects.get(Email=email)
                 if user.Password==password:
                     if user.usertype==1:
-                        request.session['user_id']
+                        request.session['user_id']=user.id
                         return redirect('index')
                     
                 else:
@@ -49,6 +46,27 @@ def UserLogin(request):
             except user_log.DoesNotExist:
                 messages.error(request,"User doesn't exist ")
     else:
-        form=userlog()
-    return render(request,'login.html',{'form':form})
-  
+        form=logincheck()
+    return render(request,'login2.html',{'form':form})
+
+
+def EditUser(request):
+    id=request.session['user_id']
+    user=get_object_or_404(user_log, id=id)
+    register= get_object_or_404(user_reg, userid=user)
+    if request.method=="POST":
+         form=userreg(request.POST,instance=register)
+         login=userlog(request.POST,instance=user)
+         if form.is_valid() and login.is_valid():
+            form.save()
+            login.save()
+            messages.success(request,"profile updated successfull")
+            return redirect('index')
+    else:
+         form=userreg(instance=register)
+         login=userlog(instance=user)
+    return render(request,'edit_profile.html',{'form':form,'login':login})
+
+def admin_userview(request):
+    user=user_reg.objects.all()
+    return render(request,'admin_userview.html',{'user':user})
