@@ -39,7 +39,7 @@ def UserLogin(request):
                 if user.Password==password:
                     if user.usertype==1:
                         request.session['user_id']=user.id
-                        return redirect('index')
+                        return redirect('user_in')
                     
                 else:
                     messages.success(request,'invalid password')
@@ -70,3 +70,14 @@ def EditUser(request):
 def admin_userview(request):
     user=user_reg.objects.all()
     return render(request,'admin_userview.html',{'user':user})
+
+def meetings(request):
+    current_user = request.user
+    users = user_reg.objects.exclude(id=current_user.id)
+    return render(request, 'meetings.html', {'users': users})
+
+def video(request):
+    return render(request,"videocall.html")
+
+def user_in(request):
+    return render(request,"user_in.html")

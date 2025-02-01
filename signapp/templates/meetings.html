@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+            position: relative;
+        }
+        .icon {
+            font-family: "Material Symbols Outlined";
+            font-size: 24px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .search-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 500px;
+        }
+        #searchBar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            padding-right: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .clear-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 30px;
+            background: none;
+            border: none;
+            color: gray;
+            display: none;
+        }
+    </style>
+    <title>Meetings</title>
+    <script>
+        function searchTable() {
+            let input = document.getElementById("searchBar");
+            let filter = input.value.toLowerCase();
+            let rows = document.querySelectorAll("tbody tr");
+            let clearBtn = document.getElementById("clearBtn");
+
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? "" : "none";
+            });
+
+            // Show or hide clear button based on input
+            clearBtn.style.display = filter ? "block" : "none";
+        }
+
+        function clearSearch() {
+            let input = document.getElementById("searchBar");
+            input.value = "";
+            searchTable();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="search-container">
+        <input type="text" id="searchBar" onkeyup="searchTable()" placeholder="Search for names or contacts...">
+        <button id="clearBtn" class="clear-btn" onclick="clearSearch()">&times;</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Meet</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{user.Name}}</td>
+                <td>{{user.Contact}}</td>
+                <td><a class="icon" href="{% url 'video' %}">video_camera_front</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
