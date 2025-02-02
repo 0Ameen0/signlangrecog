@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .forms import userreg,userlog,logincheck
+from .forms import userreg,userlog,logincheck,user_edit
 from django.contrib import messages
 from .models import user_reg,user_log
 # Create your views here.
@@ -56,7 +56,7 @@ def EditUser(request):
     register= get_object_or_404(user_reg, userid=user)
     if request.method=="POST":
          form=userreg(request.POST,instance=register)
-         login=userlog(request.POST,instance=user)
+         login=user_edit(request.POST,instance=user)
          if form.is_valid() and login.is_valid():
             form.save()
             login.save()
@@ -64,7 +64,7 @@ def EditUser(request):
             return redirect('index')
     else:
          form=userreg(instance=register)
-         login=userlog(instance=user)
+         login=user_edit(instance=user)
     return render(request,'edit_profile.html',{'form':form,'login':login})
 
 def admin_userview(request):

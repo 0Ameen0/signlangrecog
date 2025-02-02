@@ -12,7 +12,9 @@
     {% csrf_token %}
     {{ form.as_p }} 
     {{ login.as_p }}
+    <button type="button" href="#">change password</button>
     <button type="submit">Submit</button>
+    
   </form>
   {% if messages %}
   <ul>
