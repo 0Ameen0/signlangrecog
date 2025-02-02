@@ -19,3 +19,6 @@ class user_edit(forms.ModelForm):
   class Meta:
     model=user_log
     fields = ['Email']
+
+
+

@@ -61,7 +61,7 @@ def EditUser(request):
             form.save()
             login.save()
             messages.success(request,"profile updated successfull")
-            return redirect('index')
+            return redirect('user_in')
     else:
          form=userreg(instance=register)
          login=user_edit(instance=user)
@@ -81,3 +81,29 @@ def video(request):
 
 def user_in(request):
     return render(request,"user_in.html")
+
+
+
+def change_userpass(request):
+    id=request.session['user_id']
+    user=get_object_or_404(user_log, id=id)
+    if request.method == "POST":
+        form=logincheck(request.POST)
+        if form.is_valid():
+            password=form.cleaned_data['current-password']
+            try:
+                user=user_log.objects.get(Password=password)
+                if user.Password==password:
+                    if user.usertype==1:
+                        request.session['user_id']=user.id
+                        return redirect('EditUser')
+                    
+                else:
+                    messages.success(request,'invalid password')
+            except user_log.DoesNotExist:
+                messages.error(request,"User doesn't exist ")
+    else:
+        form=logincheck()
+    return render(request,'change_userpass.html',{'form':form})
+
+
