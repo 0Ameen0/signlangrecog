@@ -11,5 +11,6 @@ urlpatterns = [
     path('meetings/',views.meetings,name="meetings"),
     path('video/',views.video,name="video"),
     path('user_in/',views.user_in,name="user_in"),
-    path('change_pass/',views.change_userpass,name="change_userpass")
+    path('change_pass/',views.change_userpass,name="change_userpass"),
+    path('logout/',views.logout,name="logout")
 ]

@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .forms import userreg,userlog,logincheck,user_edit
 from django.contrib import messages
+
+from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.hashers import check_password, make_password
+
 from .models import user_reg,user_log
 # Create your views here.
 
@@ -85,25 +89,43 @@ def user_in(request):
 
 
 def change_userpass(request):
-    id=request.session['user_id']
-    user=get_object_or_404(user_log, id=id)
+    user_id = request.session.get('user_id')
+    user = get_object_or_404(user_log, id=user_id)
+
     if request.method == "POST":
-        form=logincheck(request.POST)
-        if form.is_valid():
-            password=form.cleaned_data['current-password']
-            try:
-                user=user_log.objects.get(Password=password)
-                if user.Password==password:
-                    if user.usertype==1:
-                        request.session['user_id']=user.id
-                        return redirect('EditUser')
-                    
-                else:
-                    messages.success(request,'invalid password')
-            except user_log.DoesNotExist:
-                messages.error(request,"User doesn't exist ")
-    else:
-        form=logincheck()
-    return render(request,'change_userpass.html',{'form':form})
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        # Display current password for debugging purposes (remove after verification)
+        print(f"Current password in database: {user.Password}")
+
+        # Direct password comparison (plain text)
+        if current_password != user.Password:
+            messages.error(request, 'Invalid current password.')
+            return redirect('change_userpass')
+
+        # Validate new password confirmation
+        if new_password != confirm_password:
+            messages.error(request, 'New password and confirmation do not match.')
+            return redirect('change_userpass')
+
+        # Save new password directly (no hashing)
+        user.Password = new_password
+        user.save()
+
+        messages.success(request, f'Password changed successfully!')
+        return redirect('EditUser')
+
+    return render(request, 'change_userpass.html')
 
 
+def logout(request):
+    # Clear the session to log the user out
+    request.session.flush()  # This clears all session data
+
+    # Add a logout success message
+    messages.success(request, 'You have been logged out successfully.')
+
+    # Redirect to the login page (replace 'login' with your login URL name)
+    return redirect('login')
