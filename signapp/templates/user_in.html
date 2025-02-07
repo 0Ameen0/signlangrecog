@@ -41,18 +41,19 @@ https://templatemo.com/tm-576-snapx-photography
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="{% static 'user/index.html' %}" class="logo">
-                        <img src="{% static 'user/assets/images/logo.png' %}" alt="SnapX Photography Template">
+                    <a href="{% url 'index' %}" class="logo">
+                        <img src="{% static 'user/assets/images/logo.png' %}" alt="Sign Language Recognition">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="{% url 'index' %}" class="active">Home</a></li>
                         <li class="has-sub">
-                            <a href="{% static 'user/javascript:void(0)' %}">Photos &amp; Videos</a>
+                            <!-- <a href="{% static 'javascript:void(0)' %}">Meetings</a> -->
+                            <a href="{% url 'index' %}">Meetings</a>
                             <ul class="sub-menu">
-                                <li><a href="{% static 'user/contests.html' %}">Contests</a></li>
-                                <li><a href="{% static 'user/contest-details.html' %}">Single Contest</a></li>
+                                <li><a href="{% url 'community_admin' %}">Community</a></li>
+                                <li><a href="{% url 'meetings' %}">contact</a></li>
                             </ul>
                         </li>
                         <li><a href="{% static 'user/categories.html' %}">Categories</a></li>

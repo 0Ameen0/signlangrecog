@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .forms import userreg,userlog,logincheck,user_edit
+from .forms import userreg,userlog,logincheck,user_edit,community_form
 from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.hashers import check_password, make_password
 
-from .models import user_reg,user_log
-# Create your views here.
+from .models import user_reg,user_log,community_tab
+
 
 
 def index(request):
@@ -97,10 +97,7 @@ def change_userpass(request):
         new_password = request.POST.get('new_password')
         confirm_password = request.POST.get('confirm_password')
 
-        # Display current password for debugging purposes (remove after verification)
-        print(f"Current password in database: {user.Password}")
-
-        # Direct password comparison (plain text)
+        # Direct password comparison 
         if current_password != user.Password:
             messages.error(request, 'Invalid current password.')
             return redirect('change_userpass')
@@ -122,10 +119,46 @@ def change_userpass(request):
 
 def logout(request):
     # Clear the session to log the user out
-    request.session.flush()  # This clears all session data
-
-    # Add a logout success message
+    request.session.flush()
+    # logout success message
     messages.success(request, 'You have been logged out successfully.')
-
-    # Redirect to the login page (replace 'login' with your login URL name)
+    # Redirect to login page
     return redirect('login')
+
+# create community
+def community_admin(request):
+    user_id = request.session.get('user_id') 
+    logdata=get_object_or_404(user_log,id=user_id)
+    print("USSSS",logdata)
+    if request.method == "POST":
+        comm = community_form(request.POST, request.FILES)
+        if comm.is_valid():
+            form = comm.save(commit=False)
+            form.userid=logdata
+            form.save()
+            messages.success(request, "Community created successfully!")
+
+            return redirect('community_admin') 
+    else:
+        comm = community_form()
+
+    return render(request, 'community.html', {'comm': comm})
+
+
+def edit_community(request):
+    user_id = request.session.get('user_id')
+    logdata = get_object_or_404(user_log, id=user_id)
+    community_instance = get_object_or_404(community_form.Meta.model, id=user_id)
+
+    if request.method == "POST":
+        comm = community_form(request.POST, request.FILES, instance=community_instance)
+        if comm.is_valid():
+            form = comm.save(commit=False)
+            form.userid = logdata
+            form.save()
+            messages.success(request, "Community updated successfully!")
+            return redirect('community_admin')
+    else:
+        comm = community_form(instance=community_instance)
+
+    return render(request, 'edit_community.html', {'comm': comm})

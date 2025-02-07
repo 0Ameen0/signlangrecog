@@ -1,5 +1,5 @@
 from django import forms
-from .models import user_reg,user_log
+from .models import user_reg,user_log,community_tab
 
 class userreg(forms.ModelForm):
   class Meta:
@@ -21,4 +21,8 @@ class user_edit(forms.ModelForm):
     fields = ['Email']
 
 
+class community_form(forms.ModelForm):
+  class Meta:
+    model=community_tab
+    fields=['community_name','community_desc','community_logo']
 

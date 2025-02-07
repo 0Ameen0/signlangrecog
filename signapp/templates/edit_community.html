@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
+  <!-- <style>
     .button-link {
       display: inline-block;
       padding: 10px 20px;
@@ -36,18 +36,14 @@
     .form {
       display: block;
     }
-  </style>
+  </style> -->
 </head>
 
 <body>
   <div class="container">
     <form method="post">
       {% csrf_token %}
-      {{ form.as_p }}
-      {{ login.as_p }}
-      <button></button>
-      <a href="{% url 'change_userpass' %}">change password</a>
-
+      {{ comm.as_p }}
       <button type="submit">Submit</button>
     </form>
   </div>
