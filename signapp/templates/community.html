@@ -79,7 +79,7 @@
   <form method="post" enctype="multipart/form-data">
     <h1>Create New Community</h1>
     {% csrf_token %}
-    {{ comm.as_p }} 
+    {{ Community.as_p }} 
     <button type="submit">Create Community</button><br>
   </form>
   {% if messages %}

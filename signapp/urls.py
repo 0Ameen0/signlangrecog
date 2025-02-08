@@ -14,5 +14,5 @@ urlpatterns = [
     path('change_pass/',views.change_userpass,name="change_userpass"),
     path('logout/',views.logout,name="logout"),
     path('community_admin/',views.community_admin,name="community_admin"),
-    path('EditCommunity/<int:community_id>/',views.edit_community,name="EditCommunity"),
+    path('view_community/',views.view_community,name="view_community"),
 ]

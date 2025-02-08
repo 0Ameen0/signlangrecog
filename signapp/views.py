@@ -145,20 +145,9 @@ def community_admin(request):
     return render(request, 'community.html', {'comm': comm})
 
 
-def edit_community(request):
+def view_community(request):
     user_id = request.session.get('user_id')
     logdata = get_object_or_404(user_log, id=user_id)
-    community_instance = get_object_or_404(community_form.Meta.model, id=user_id)
+    community = community_tab.objects.all()
+    return render(request, 'view_community.html', {'community': community})
 
-    if request.method == "POST":
-        comm = community_form(request.POST, request.FILES, instance=community_instance)
-        if comm.is_valid():
-            form = comm.save(commit=False)
-            form.userid = logdata
-            form.save()
-            messages.success(request, "Community updated successfully!")
-            return redirect('community_admin')
-    else:
-        comm = community_form(instance=community_instance)
-
-    return render(request, 'edit_community.html', {'comm': comm})

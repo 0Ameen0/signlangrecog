@@ -15,7 +15,7 @@ class user_reg(models.Model):
 
 class community_tab(models.Model):
   community_name=models.CharField(max_length=50)
-  community_desc=models.CharField(max_length=350)
+  community_name=models.CharField(max_length=350)
   community_logo=models.FileField(upload_to='uploads/')
   userid=models.ForeignKey(user_log,on_delete=models.CASCADE)
 

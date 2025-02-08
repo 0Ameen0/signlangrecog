@@ -1,0 +1,38 @@
+{% extends 'user_in.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Community</title>
+</head>
+
+<body>
+  <table>
+    <thead>
+        <tr>
+          <th>Community Logo</th>  
+          <th>Community Name</th>
+            <th>Community Description</th>
+            <!-- <th>edit</th>
+            <th>delete</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for mycomm in community %}
+        <tr>
+            <td>{{mycomm.community_logo}}</td>
+            <td>{{mycomm.community_name}}</td>
+            <td>{{mycomm.community_name}}</td>
+            <td><a class="icon" href="{% url 'video' %}">video_camera_front</a></td>
+            <td><a class="icon" href="{% url 'video' %}">video_camera_front</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+
+</html>
+{% endblock %}
