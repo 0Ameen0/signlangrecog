@@ -1,38 +1,182 @@
+ <!-- view community -->
 {% extends 'user_in.html' %}
+{% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>View Community</title>
-</head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<body>
+
+<style>
+  .search-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  #searchBar {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  #searchBar:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    display: none;
+  }
+  .create-btn {
+  background-color: #007BFF; 
+  color: white;        
+  padding: 10px 20px;       
+  border: none;              
+  border-radius: 5px;        
+  cursor: pointer;       
+  font-size: 16px;          
+  transition: background-color 0.3s ease; 
+}
+
+.create-btn:hover {
+  background-color: #0056b3; 
+}
+
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th,td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #00BDFE;
+    color: white;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #e9f5ff;
+    transition: background-color 0.3s ease;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+</style>
+
+<div class="container">
+  <div class="search-container">
+    <input type="text" id="searchBar" placeholder="Search Communities..." onkeyup="filterTable()">
+    <button class="clear-btn" onclick="clearSearch()">×</button>
+  </div>
+
+  <!-- <a href="{% url 'community_admin' %}">Create Community</a> -->
+
+  <!-- <button onclick="window.location.href='{% url 'community_admin' %}' "; class="create-btn">Create Community</button> -->
+
+  <a href="{% url 'community_admin' %}" class="btn btn-primary">Create Community</a>
+
   <table>
     <thead>
-        <tr>
-          <th>Community Logo</th>  
-          <th>Community Name</th>
-            <th>Community Description</th>
-            <!-- <th>edit</th>
-            <th>delete</th> -->
-        </tr>
+      <tr>
+        <th>Community Logo</th>
+        <th>Community Name</th>
+        <th>Community Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View Members</th>
+        <th>Add Members</th>
+      </tr>
     </thead>
     <tbody>
-        {% for mycomm in community %}
-        <tr>
-            <td>{{mycomm.community_logo}}</td>
-            <td>{{mycomm.community_name}}</td>
-            <td>{{mycomm.community_name}}</td>
-            <td><a class="icon" href="{% url 'video' %}">video_camera_front</a></td>
-            <td><a class="icon" href="{% url 'video' %}">video_camera_front</a></td>
-        </tr>
-        {% endfor %}
+      {% for mycomm in communities %}
+      <tr>
+        <!-- <td>
+          <img src="{{ mycomm.community_logo.url }}" alt="Logo">
+        </td> -->
+          {% if mycomm.community_logo %}
+          <!-- <td>{{ mycomm.community_logo }}</td> -->
+            <td><img src="/{{ mycomm.community_logo }}" alt=""></td>
+          {% else %}
+            <td><img src="{% static 'users/icons/default-logo.png' %}" alt="Default Logo"></td>
+          {% endif %}
+        
+        
+        <td>{{ mycomm.community_name }}</td>
+        <td>{{ mycomm.community_desc }}</td>
+        <td>
+          <a href="{% url 'edit_community' mycomm.id %}">
+            <i class="fa-solid fa-pen-to-square" style="color: #007BFF; font-size: 20px;"></i>
+          </a>
+        </td>
+        
+        <td>
+          <a href="{% url 'delete_community' mycomm.id %}" onclick="return confirm('Are you sure you want to delete this community?');">
+            <i class="fa-solid fa-trash" style="color: #007BFF; font-size: 20px;"></i>
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'view_member' mycomm.id %}"><i class="fa-solid fa-eye" style="color: #007BFF; font-size: 20px;"></i></a>
+        </td>
+        <td>
+          <a href="{% url 'view_user' mycomm.id %}"><i class="fa-solid fa-plus" style="color: #007BFF; font-size: 20px;"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
-</body>
+  </table>
+</div>
 
-</html>
+<script>
+  function filterTable() {
+    var input = document.getElementById("searchBar");
+    var filter = input.value.toUpperCase();
+    var table = document.querySelector("table");
+    var tr = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < tr.length; i++) {
+      var td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        var txtValue = td.textContent || td.innerText;
+        tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+      }
+    }
+
+    document.querySelector(".clear-btn").style.display = input.value ? "block" : "none";
+  }
+
+  function clearSearch() {
+    document.getElementById("searchBar").value = "";
+    filterTable();
+    document.querySelector(".clear-btn").style.display = "none";
+  }
+
+</script>
 {% endblock %}

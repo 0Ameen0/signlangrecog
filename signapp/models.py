@@ -15,7 +15,13 @@ class user_reg(models.Model):
 
 class community_tab(models.Model):
   community_name=models.CharField(max_length=50)
-  community_name=models.CharField(max_length=350)
+  community_desc=models.CharField(max_length=350)
   community_logo=models.FileField(upload_to='uploads/')
   userid=models.ForeignKey(user_log,on_delete=models.CASCADE)
+
+class community_member(models.Model):
+  community_id=models.ForeignKey(community_tab,on_delete=models.CASCADE)
+  admin_id=models.ForeignKey(user_log,on_delete=models.CASCADE,related_name='admin_id')
+  member_id=models.ForeignKey(user_log,on_delete=models.CASCADE,related_name='member_id')
+  date = models.DateTimeField(auto_now_add=True)
 

@@ -1,0 +1,36 @@
+<!-- # delete community(delete_community.html)  -->
+
+{% extends 'user_in.html' %}
+{% block content %}
+<div class="container">
+    <h2>Delete Community</h2>
+    <p>Are you sure you want to delete <strong>{{ community.community_name }}</strong>?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn">Yes, Delete</button>
+        <a href="{% url 'view_community' %}">Cancel</a>
+    </form>
+</div>
+
+<style>
+    
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+    a {
+        display: inline-block;
+        margin-top: 10px;
+        color: #007BFF;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}

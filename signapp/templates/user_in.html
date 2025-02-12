@@ -47,13 +47,13 @@ https://templatemo.com/tm-576-snapx-photography
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="{% url 'index' %}" class="active">Home</a></li>
+                        <li><a href="{% url 'user_in' %}" class="active">Home</a></li>
                         <li class="has-sub">
                             <!-- <a href="{% static 'javascript:void(0)' %}">Meetings</a> -->
-                            <a href="{% url 'index' %}">Meetings</a>
+                            <a href="{% url 'user_in' %}">Community</a>
                             <ul class="sub-menu">
-                                <li><a href="{% url 'community_admin' %}">Community</a></li>
-                                <li><a href="{% url 'meetings' %}">contact</a></li>
+                                <li><a href="{% url 'view_community' %}">MyCommunity</a></li>
+                                <li><a href="{% url 'community_admin' %}">Communities</a></li>
                             </ul>
                         </li>
                         <li><a href="{% static 'user/categories.html' %}">Categories</a></li>

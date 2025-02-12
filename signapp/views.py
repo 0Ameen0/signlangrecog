@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .forms import userreg,userlog,logincheck,user_edit,community_form
+from .forms import *
 from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.hashers import check_password, make_password
 
-from .models import user_reg,user_log,community_tab
-
+from .models import *
+from django.db.models import Q
 
 
 def index(request):
@@ -76,8 +76,8 @@ def admin_userview(request):
     return render(request,'admin_userview.html',{'user':user})
 
 def meetings(request):
-    current_user = request.user
-    users = user_reg.objects.exclude(id=current_user.id)
+    current_user = request.session.get('user_id')
+    users = user_reg.objects.exclude(id=current_user)
     return render(request, 'meetings.html', {'users': users})
 
 def video(request):
@@ -138,16 +138,81 @@ def community_admin(request):
             form.save()
             messages.success(request, "Community created successfully!")
 
-            return redirect('community_admin') 
+            return redirect('view_community') 
     else:
         comm = community_form()
 
     return render(request, 'community.html', {'comm': comm})
 
+# view community
 
 def view_community(request):
     user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')  
     logdata = get_object_or_404(user_log, id=user_id)
-    community = community_tab.objects.all()
-    return render(request, 'view_community.html', {'community': community})
+    communities = community_tab.objects.filter(userid=logdata) 
+    return render(request, 'view_community.html', {'communities': communities})
 
+
+
+# Edit Community
+def edit_community(request, community_id):
+    community = get_object_or_404(community_tab, id=community_id)
+
+    if request.method == "POST":
+        form = community_form(request.POST, request.FILES, instance=community)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Community updated successfully!")
+            return redirect('view_community')
+    else:
+        form = community_form(instance=community)
+
+    return render(request, 'edit_community.html', {'form': form, 'community': community})
+
+# Delete Community
+def delete_community(request, community_id):
+    community = get_object_or_404(community_tab, id=community_id)
+
+    # if request.method == "POST":
+    community.delete()
+        # messages.success(request, "Community deleted successfully!")
+    return redirect('view_community')
+
+    # return render(request, 'delete_community.html', {'community': community})
+
+def view_user(request,community_id):
+    current_user = request.session.get('user_id')
+    comm_id=community_tab.objects.get(id=community_id)
+    users = user_reg.objects.exclude(id=current_user)
+    mem=community_member.objects.filter(community_id=comm_id)
+    member_ids = mem.values_list('member_id', flat=True)
+
+    return render(request, 'view_user.html', {'users': users,'comm_id':comm_id,'mem':member_ids})
+
+def add_member(request,community_id,user_id):
+
+    comm_id=community_tab.objects.get(id=community_id)
+    useid=user_log.objects.get(id=user_id)
+    community_admin=request.session.get('user_id')
+    admin_id=user_log.objects.get(id=community_admin)
+    add_mem=community_member.objects.create(community_id=comm_id,admin_id=admin_id,member_id=useid)
+
+    return redirect('view_user',community_id=community_id)
+
+    
+def view_member(request, community_id):
+    comm = community_member.objects.filter(community_id=community_id).select_related('member_id')
+    members = user_reg.objects.filter(userid__in=comm.values_list('member_id', flat=True))
+
+    return render(request, 'view_members.html', {'comm': comm, 'members': members})
+
+# Delete Community
+def delete_member(request, community_id,cmid):
+    member = get_object_or_404(community_member, id=cmid)
+    member.delete()
+        # messages.success(request, "Community deleted successfully!")
+    return redirect('view_member',community_id=community_id)
+
+    # return render(request, 'delete_member.html', {'member': member})

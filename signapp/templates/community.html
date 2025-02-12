@@ -79,8 +79,14 @@
   <form method="post" enctype="multipart/form-data">
     <h1>Create New Community</h1>
     {% csrf_token %}
-    {{ Community.as_p }} 
+
+    {% if comm %}
+       {{ comm.as_p }}
+    {% else %}
+       <p style="color: red;">Form is not loading. Check the view!</p>
+     {% endif %}
     <button type="submit">Create Community</button><br>
+    
   </form>
   {% if messages %}
   <ul>

@@ -1,0 +1,56 @@
+<!-- # edit community(edit_community.html)  -->
+
+{% extends 'user_in.html' %}
+{% block content %}
+<div class="container">
+    <h2>Edit Community</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="community_logo">Community Logo:</label>
+        <input type="file" name="community_logo" id="community_logo" accept="image/*"><br><br>
+
+        <label for="community_name">Community Name:</label>
+        <input type="text" name="community_name" id="community_name" value="{{ community.community_name }}" required><br><br>
+
+        <label for="community_desc">Community Description:</label>
+        <textarea name="community_desc" id="community_desc" rows="4" required>{{ community.community_desc }}</textarea><br><br>
+
+        <button type="submit">Save Changes</button>
+        <a href="{% url 'view_community' %}">Cancel</a>
+    </form>
+</div>
+
+<style>
+    /* .container {
+        max-width: 600px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    } */
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    a {
+        margin-left: 10px;
+        color: #007BFF;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}

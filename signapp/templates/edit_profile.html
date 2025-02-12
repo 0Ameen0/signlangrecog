@@ -45,8 +45,8 @@
       {% csrf_token %}
       {{ form.as_p }}
       {{ login.as_p }}
-      <button></button>
-      <a href="{% url 'change_userpass' %}">change password</a>
+      <a href="{% url 'user_in' %}" >_</a>
+      <a href="{% url 'change_userpass' %}" >change password</a>
 
       <button type="submit">Submit</button>
     </form>
