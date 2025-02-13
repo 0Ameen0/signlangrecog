@@ -11,6 +11,7 @@ class user_reg(models.Model):
   Name=models.CharField(max_length=100)
   Gender=models.CharField(max_length=50)
   Contact=models.CharField(max_length=15)
+  img=models.FileField(upload_to='uploads/',default=True)
   userid=models.ForeignKey(user_log,on_delete=models.CASCADE)
 
 class community_tab(models.Model):
@@ -25,3 +26,8 @@ class community_member(models.Model):
   member_id=models.ForeignKey(user_log,on_delete=models.CASCADE,related_name='member_id')
   date = models.DateTimeField(auto_now_add=True)
 
+class UserChat(models.Model):
+    sender_id = models.ForeignKey(user_log, on_delete=models.CASCADE, related_name='sent_messages')
+    receiver_id = models.ForeignKey(user_log, on_delete=models.CASCADE, related_name='received_messages')
+    message = models.CharField(max_length=500)
+    date = models.DateTimeField(auto_now_add=True)

@@ -123,7 +123,7 @@
         </td> -->
           {% if mycomm.community_logo %}
           <!-- <td>{{ mycomm.community_logo }}</td> -->
-            <td><img src="/{{ mycomm.community_logo }}" alt=""></td>
+            <td><img src="{{ mycomm.community_logo.url }}" alt=""></td>
           {% else %}
             <td><img src="{% static 'users/icons/default-logo.png' %}" alt="Default Logo"></td>
           {% endif %}

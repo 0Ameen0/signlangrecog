@@ -17,7 +17,7 @@ def admin(request):
 
 def UserReg(request):
      if request.method=="POST":
-         form=userreg(request.POST)
+         form=userreg(request.POST,request.FILES)
          login=userlog(request.POST)
          if form.is_valid() and login.is_valid():
              user=login.save(commit=False)
@@ -59,7 +59,7 @@ def EditUser(request):
     user=get_object_or_404(user_log, id=id)
     register= get_object_or_404(user_reg, userid=user)
     if request.method=="POST":
-         form=userreg(request.POST,instance=register)
+         form=userreg(request.POST,request.FILES,instance=register)
          login=user_edit(request.POST,instance=user)
          if form.is_valid() and login.is_valid():
             form.save()
@@ -216,3 +216,7 @@ def delete_member(request, community_id,cmid):
     return redirect('view_member',community_id=community_id)
 
     # return render(request, 'delete_member.html', {'member': member})
+
+def chatss(request):
+    return render(request,'chat.html')
+

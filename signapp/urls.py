@@ -23,4 +23,6 @@ urlpatterns = [
     path('add_member/<int:community_id>/<int:user_id>/',views.add_member,name="add_member"),
     path('view_member/<int:community_id>/',views.view_member,name="view_member"),
     path('delete_member/<int:community_id>/<int:cmid>/',views.delete_member,name="delete_member"),
+    path('chat',views.chatss,name="chat"),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

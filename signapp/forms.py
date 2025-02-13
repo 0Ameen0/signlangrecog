@@ -1,10 +1,10 @@
 from django import forms
-from .models import user_reg,user_log,community_tab
+from .models import *
 
 class userreg(forms.ModelForm):
   class Meta:
     model=user_reg
-    fields = ['Name','Gender','Contact']
+    fields = ['Name','Gender','Contact','img']
 
 class userlog(forms.ModelForm):
   class Meta:
@@ -26,4 +26,9 @@ class community_form(forms.ModelForm):
   class Meta:
     model=community_tab
     fields=['community_name','community_desc','community_logo']
+
+class UserChatForm(forms.ModelForm):
+    class Meta:
+        model = UserChat
+        fields = ['message']
 

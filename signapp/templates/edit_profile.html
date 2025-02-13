@@ -1,5 +1,6 @@
 {% extends 'user_in.html' %}
 {% block content %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,13 +42,15 @@
 
 <body>
   <div class="container">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
       {{ login.as_p }}
+      <img src="{{ form.instance.img.url }}" alt="Default Logo" width="2px">
+      
       <a href="{% url 'user_in' %}" >_</a>
       <a href="{% url 'change_userpass' %}" >change password</a>
-
+      
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -58,6 +61,7 @@
     {% endfor %}
   </ul>
   {% endif %}
+  
 </body>
 
 </html>
