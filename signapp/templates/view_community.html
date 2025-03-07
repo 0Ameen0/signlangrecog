@@ -109,10 +109,12 @@
         <th>Community Logo</th>
         <th>Community Name</th>
         <th>Community Description</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Chat</th>
         <th>View Members</th>
         <th>Add Members</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        
       </tr>
     </thead>
     <tbody>
@@ -123,7 +125,7 @@
         </td> -->
           {% if mycomm.community_logo %}
           <!-- <td>{{ mycomm.community_logo }}</td> -->
-            <td><img src="{{ mycomm.community_logo.url }}" alt=""></td>
+            <td><img src="{{ mycomm.community_logo.url }}" alt="Logo"></td>
           {% else %}
             <td><img src="{% static 'users/icons/default-logo.png' %}" alt="Default Logo"></td>
           {% endif %}
@@ -131,6 +133,17 @@
         
         <td>{{ mycomm.community_name }}</td>
         <td>{{ mycomm.community_desc }}</td>
+        <td>
+          <a href="{% url 'chat' mycomm.id %}" >
+            <i class="fa-solid fa-message" style="color: #007BFF; font-size: 20px;"></i>
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'view_member' mycomm.id %}"><i class="fa-solid fa-eye" style="color: #007BFF; font-size: 20px;"></i></a>
+        </td>
+        <td>
+          <a href="{% url 'view_user' mycomm.id %}"><i class="fa-solid fa-plus" style="color: #007BFF; font-size: 20px;"></i></a>
+        </td>
         <td>
           <a href="{% url 'edit_community' mycomm.id %}">
             <i class="fa-solid fa-pen-to-square" style="color: #007BFF; font-size: 20px;"></i>
@@ -142,12 +155,7 @@
             <i class="fa-solid fa-trash" style="color: #007BFF; font-size: 20px;"></i>
           </a>
         </td>
-        <td>
-          <a href="{% url 'view_member' mycomm.id %}"><i class="fa-solid fa-eye" style="color: #007BFF; font-size: 20px;"></i></a>
-        </td>
-        <td>
-          <a href="{% url 'view_user' mycomm.id %}"><i class="fa-solid fa-plus" style="color: #007BFF; font-size: 20px;"></i></a>
-        </td>
+        
       </tr>
       {% endfor %}
     </tbody>

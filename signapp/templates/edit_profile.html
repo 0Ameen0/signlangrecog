@@ -1,68 +1,178 @@
 {% extends 'user_in.html' %}
 {% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .button-link {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 98%;
+    max-width: 1100px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
+    gap: 35px;
+    margin: 0 0 25px 0; /* Reduced top space further */
+  }
+
+  .left-side {
+    flex: 1;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    text-align: center;
+  }
+
+  .right-side {
+    flex: 2;
+    padding: 20px;
+  }
+
+  .profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 2px solid #007BFF;
+    overflow: hidden;
+    margin: 0 auto 15px auto;
+    background: #ddd;
+  }
+
+  .profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .user-details {
+    text-align: left;
+    font-size: 18px;
+  }
+
+  .user-details p {
+    margin: 10px 0;
+  }
+
+  .user-details p span {
+    font-weight: bold;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  label {
+    font-weight: bold;
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  input, button {
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  button {
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    border: none;
+    margin-top: 15px;
+    transition: background 0.3s ease-in-out;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .button-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007BFF;
+    text-decoration: none;
+  }
+
+  .button-link:hover {
+    text-decoration: underline;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    color: red;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .profile-container {
+      flex-direction: column;
+      width: 95%;
+    }
+    .left-side {
+      border-right: none;
       text-align: center;
-      text-decoration: none;
-      border-radius: 5px;
     }
+  }
+</style>
 
-    .button-link:hover {
-      background-color: #0056b3;
-    }
+<div class="profile-container">
+  
+  <!-- Left Side: User Details -->
+  <div class="left-side">
+    {% if form.instance.img %}
+      <div class="profile-pic">
+        <img src="{{ form.instance.img.url }}" alt="User Image">
+      </div>
+    {% else %}
+      <div class="profile-pic">
+        <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Image">
+      </div>
+    {% endif %}
+    
+    <div class="user-details">
+      <p><span>Name:</span> {{ form.instance.Name }}</p>
+      <p><span>Gender:</span> {{ form.instance.Gender }}</p>
+      <p><span>Phone:</span> {{ form.instance.Contact }}</p>
+      <p><span>Email:</span> {{ form.instance.userid.Email }}</p>
+    </div>
+  </div>
 
-    .container {
-
-      padding: 20px;
-      padding-left: 10px;
-      max-width: 100%;
-    }
-
-    .container form {
-      justify-items: center;
-    }
-
-    .form {
-      display: block;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container">
+  <!-- Right Side: Edit Form -->
+  <div class="right-side">
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      {{ login.as_p }}
-      <img src="{{ form.instance.img.url }}" alt="Default Logo" width="2px">
-      
-      <a href="{% url 'user_in' %}" >_</a>
-      <a href="{% url 'change_userpass' %}" >change password</a>
-      
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  
-</body>
 
-</html>
+      <a href="{% url 'change_userpass' %}" class="button-link">Change Password</a>
+      
+      <button type="submit">Save Changes</button>
+    </form>
+    
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+</div>
+
 {% endblock %}

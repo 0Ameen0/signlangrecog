@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class user_log(models.Model):
@@ -11,8 +12,8 @@ class user_reg(models.Model):
   Name=models.CharField(max_length=100)
   Gender=models.CharField(max_length=50)
   Contact=models.CharField(max_length=15)
-  img=models.FileField(upload_to='uploads/',default=True)
   userid=models.ForeignKey(user_log,on_delete=models.CASCADE)
+  img=models.FileField(upload_to='uploads/',default=True)
 
 class community_tab(models.Model):
   community_name=models.CharField(max_length=50)
@@ -27,7 +28,9 @@ class community_member(models.Model):
   date = models.DateTimeField(auto_now_add=True)
 
 class UserChat(models.Model):
-    sender_id = models.ForeignKey(user_log, on_delete=models.CASCADE, related_name='sent_messages')
-    receiver_id = models.ForeignKey(user_log, on_delete=models.CASCADE, related_name='received_messages')
+    sender_id = models.ForeignKey(user_log, on_delete=models.CASCADE)
+    receiver_id = models.ForeignKey(community_tab, on_delete=models.CASCADE)
     message = models.CharField(max_length=500)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
+    time = models.TimeField(auto_now_add=True)
+

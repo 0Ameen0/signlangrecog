@@ -1,4 +1,6 @@
+{% extends 'user_in.html' %}
 {% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,10 +15,6 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             text-align: center;
-        }
-        .container {
-            max-width: 500px;
-            margin: auto;
         }
         table {
             width: 100%;
@@ -119,3 +117,4 @@
     </table>
 </body>
 </html>
+{% endblock %}

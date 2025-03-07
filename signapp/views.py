@@ -142,7 +142,7 @@ def community_admin(request):
     else:
         comm = community_form()
 
-    return render(request, 'community.html', {'comm': comm})
+    return render(request, 'createcommunity.html', {'comm': comm})
 
 # view community
 
@@ -214,9 +214,47 @@ def delete_member(request, community_id,cmid):
     member.delete()
         # messages.success(request, "Community deleted successfully!")
     return redirect('view_member',community_id=community_id)
-
     # return render(request, 'delete_member.html', {'member': member})
 
-def chatss(request):
-    return render(request,'chat.html')
+
+# Community Chat 
+def chats(request,community_id):
+    user = request.session.get('user_id') # Get the logged-in user
+    community = get_object_or_404(community_tab, id=community_id)  # Get the community
+    usergg = get_object_or_404(user_log, id=user) 
+    # Handle form submission
+    if request.method == "POST":
+        form = UserChatForm(request.POST)
+        if form.is_valid():
+            chat = form.save(commit=False)
+            chat.sender_id = usergg
+            chat.receiver_id = community
+            chat.save()
+            messages.success(request, "Message sent successfully")
+            return redirect('chat',community_id=community_id)
+    else:
+        form = UserChatForm()
+
+    # Fetch chat history
+    messages_list = UserChat.objects.filter(sender_id=usergg, receiver_id=community).order_by('date','time')
+
+    return render(request, 'groupchat.html', {'form': form, 'messages': messages_list, 'community': community, 'user': usergg})
+
+
+
+def community(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login') 
+    user = get_object_or_404(user_log,id=user_id)
+    community = community_member.objects.filter(member_id=user)
+
+    print(messages) 
+    
+
+
+    if not community.exists():
+        messages.info(request, "You are not a member of any community!")
+
+    return render(request, 'community.html', {'community': community , 'user': user})
 

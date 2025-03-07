@@ -27,8 +27,11 @@ class community_form(forms.ModelForm):
     model=community_tab
     fields=['community_name','community_desc','community_logo']
 
+
 class UserChatForm(forms.ModelForm):
     class Meta:
         model = UserChat
         fields = ['message']
-
+        widgets = {
+            'message': forms.Textarea(attrs={'rows':2,'placeholder': 'Write your message...'})
+        }
