@@ -218,27 +218,55 @@ def delete_member(request, community_id,cmid):
 
 
 # Community Chat 
-def chats(request,community_id):
-    user = request.session.get('user_id') # Get the logged-in user
+# def chats(request,community_id):
+#     user = request.session.get('user_id') # Get the logged-in user
+#     community = get_object_or_404(community_tab, id=community_id)  # Get the community
+#     usergg = get_object_or_404(user_log, id=user) 
+#     # Handle form submission
+#     if request.method == "POST":
+#         form = UserChatForm(request.POST)
+#         if form.is_valid():
+#             chat = form.save(commit=False)
+#             chat.sender_id = usergg
+#             chat.receiver_id = community
+#             chat.save()
+#             messages.success(request, "Message sent successfully")
+#             return redirect('chat',community_id=community_id)
+#     else:
+#         form = UserChatForm()
+
+#     # Fetch chat history
+#     messages_list = UserChat.objects.filter(sender_id=usergg, receiver_id=community).order_by('date','time')
+
+#     return render(request, 'groupchat.html', {'form': form, 'messages': messages_list, 'community': community, 'user': usergg})
+
+def chats(request, community_id):
+    user = request.session.get('user_id')  # Get the logged-in user
     community = get_object_or_404(community_tab, id=community_id)  # Get the community
-    usergg = get_object_or_404(user_log, id=user) 
-    # Handle form submission
+    usergg = get_object_or_404(user_log, id=user)  
+
     if request.method == "POST":
         form = UserChatForm(request.POST)
         if form.is_valid():
             chat = form.save(commit=False)
             chat.sender_id = usergg
-            chat.receiver_id = community
+            chat.receiver_id = community  # Message is sent to the community
             chat.save()
             messages.success(request, "Message sent successfully")
-            return redirect('chat',community_id=community_id)
+            return redirect('chat', community_id=community_id)
     else:
         form = UserChatForm()
 
-    # Fetch chat history
-    messages_list = UserChat.objects.filter(sender_id=usergg, receiver_id=community).order_by('date','time')
+    # Fetch chat history (ALL messages related to this community)
+    messages_list = UserChat.objects.filter(receiver_id=community).order_by('date', 'time')
 
-    return render(request, 'groupchat.html', {'form': form, 'messages': messages_list, 'community': community, 'user': usergg})
+    return render(request, 'groupchat.html', {
+        'form': form,
+        'messages': messages_list,
+        'community': community,
+        'user': usergg
+    })
+
 
 
 
