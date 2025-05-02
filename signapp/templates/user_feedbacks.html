@@ -363,15 +363,20 @@
                             <div class="collapse" id="menuTables">
                                 <ul class="sub-menu">
                                     <li class="menu-item">
-                                        <a class='menu-link' href="{% static 'admin/tables-basic.html' %}">
-                                            <span class="menu-text">Basic Tables</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a class='menu-link' href="{% static 'admin/tables-datatables.html' %}">
-                                            <span class="menu-text">Data Tables</span>
-                                        </a>
-                                    </li>
+                                    <a class='menu-link' href="{% url 'admin_usertable' %}">
+                                        <span class="menu-text">user Table</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="{% url 'admin_grptable' %}">
+                                        <span class="menu-text">Community Table</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class='menu-link' href="{% url 'user_feedback' %}">
+                                        <span class="menu-text">FeedbacksTable</span>
+                                    </a>
+                                </li>
                                 </ul>
                             </div>
                         </li>
@@ -802,11 +807,11 @@
                                         
                                         
                                             <tbody>
-                                              {% for grp in group %}
+                                              {% for feed in feeds %}
                                                 <tr>
-                                                    <td>{{grp.community_name}}</td>
-                                                    <td>{{grp.community_desc}}</td>
-                                                    <td>{{grp.community_logo}}</td>
+                                                    <td>{{feed.login_id.member_userid.Name}}</td>
+                                                    <td>{{feed.current_date}}</td>
+                                                    <td>{{feed.feedback}}</td>
                                                     
                                                 </tr>
                                               {% endfor %}

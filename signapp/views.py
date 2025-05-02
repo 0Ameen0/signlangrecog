@@ -106,7 +106,7 @@ def admin_grpview(request):
     return render(request,'admin_grpview.html',{'group':group})
 
 def user_feeds(request):
-    feedbacks=Feedback.objects.all()
+    feedbacks=Feedback.objects.all().select_related('login_id__member_userid')
     return render(request,'user_feedbacks.html',{'feeds':feedbacks})
 
 # views users for meeting
