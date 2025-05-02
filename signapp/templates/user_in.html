@@ -41,12 +41,16 @@
         .nav-link:hover {
             background-color: #0056b3;
         }
+        .logo-img {
+  height: 60px;
+  width: auto; 
+  object-fit: contain;
+  display: block;
+  }
   </STyle>
 
 </head>
-
 <body>
-
 
   <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
@@ -55,8 +59,8 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="{% url 'index' %}" class="logo">
-              <img src="{% static 'user/assets/images/logo.png' %}" alt="Sign Language Recognition">
+            <a href="#" class="logo">
+              <img src="{% static 'user/assets/images/Signifylogo.jpg' %}" alt="Logo" class="logo-img">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
@@ -78,17 +82,23 @@
                 </ul> 
             </li> -->
 
-              <li><a href="{% url 'meetings' %}">Meetings</a></li>
+              <li>
+                <a href="{% url 'meetings' %}">
+                  <i class="fa-solid fa-video" style="color: #007BFF; font-size: 10px;"></i> Meetings
+                </a>
+                
+              </li>
               <li><a href="#">
                   <i class="fa-solid fa-bell" style="color: #007BFF; font-size: 20px;"></i>&nbsp; Notification
-                </a></li>
+                  </a>
+              </li>
 
             </ul>
             <ul style="margin: auto;">
               <li>
                 <a href="{% url 'EditUser' %}">
 
-                  <img src="{{ form.instance.img.url}}" alt="Profile" class="rounded-circle"
+                  <img src="{{ user.img.url }}{{ register.img.url}}/" alt="Profile" class="rounded-circle"
                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;border: 1.5px solid blue;border-color: #3498db;">
                 </a>
               </li>
@@ -106,6 +116,35 @@
     </div>
   </header>
   <!-- ***** Header Area End ***** -->
+   <!-- ***** Main Banner Area Start ***** -->
+<div class="main-banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1">
+        <div class="header-text">
+          <h2>Step into a world where <em>Sign Language</em> breaks the <em>communication barriers</em></h2>
+          <p>
+            SignConnect is a powerful and user-friendly platform designed to bridge the communication gap between the deaf, mute, and hearing communities. With real-time sign language recognition and seamless interaction features, it empowers inclusive communication. Built with Django and modern web technologies, SignConnect offers a dynamic and accessible experience for all users.
+          </p>
+          <div class="buttons">
+            <div class="big-border-button">
+              <a href="{% url 'login' %}">Sign Language Recognition System</a>
+            </div>
+            <div class="icon-button">
+              <a href="#" id="videoLink" onclick="showVideo(event);">
+                <i class="fa fa-play"></i> An introduction about us
+              </a>
+              <div id="videoContainer" style="display: none; margin-top: 10px;">
+                <div id="videoFrame"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ***** Main Banner Area End ***** -->
   <br>
   <br>
   <br>
@@ -127,15 +166,59 @@
         <div class="col-lg-12">
           <p>Copyright © 2048 <a href="#">SnapX</a> Photo Contest Co., Ltd. All rights reserved.
 
-            Design: <a title="CSS Templates" rel="sponsored" href="https://templatemo.com/page/1"
+            Design: <a title="CSS Templates" rel="sponsored" href="#"
               target="_blank">TemplateMo</a></p>
+            
         </div>
       </div>
     </div>
+    <div>
+      <a href="{% url 'login'}" class="btn-primary">Admin</a>
+    </div>
+    
   </footer>
 
   <!-- Scripts -->
   <script>
+    
+  var player;
+
+  function showVideo(event) {
+    event.preventDefault();
+    document.getElementById("videoContainer").style.display = "block";
+    document.getElementById("videoLink").style.display = "none";
+
+    // Load YouTube IFrame API script only once
+    if (!window.YT) {
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    } else if (player) {
+      player.playVideo();
+    }
+  }
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('videoFrame', {
+      height: '315',
+      width: '560',
+      videoId: 'HZbG_k5kF2c',  // You can change this video ID
+      playerVars: { 'autoplay': 1, 'controls': 1 },
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+      document.getElementById("videoContainer").style.display = "none";
+      document.getElementById("videoLink").style.display = "block";
+    }
+  }
+
+
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('mouseenter', function() {
             window.location.href = this.getAttribute('data-url');

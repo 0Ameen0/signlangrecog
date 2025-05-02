@@ -1,7 +1,123 @@
-{% extends 'user_in.html' %}
-{% block content %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+  <meta charset="utf-8">
+  <meta name="author" content="templatemo">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+    rel="stylesheet">
+
+  <title>Sign Language Recognition System</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'user/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="{% static 'user/assets/css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'user/assets/css/templatemo-snapx-photography.css' %}">
+  <link rel="stylesheet" href="{% static 'user/assets/css/owl.css' %}">
+  <link rel="stylesheet" href="{% static 'user/assets/css/animate.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+  <!--TemplateMo 576 SnapX Photography https://templatemo.com/tm-576-snapx-photography-->
+  <style>
+    
+
+    .nav-link {
+            display: block;
+            padding: 20px;
+            font-size: 20px;
+            color: white;
+            background-color: #007BFF;
+            margin: 10px;
+            text-decoration: none;
+            width: 200px;
+            margin: auto;
+        }
+        .nav-link:hover {
+            background-color: #0056b3;
+        }
+        .logo-img {
+  height: 60px;
+  width: auto; 
+  object-fit: contain;
+  display: block;
+  }
+  </STyle>
+
+</head>
+
+<body>
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="#" class="logo">
+              <img src="{% static 'user/assets/images/Signifylogo.jpg' %}" alt="Logo" class="logo-img">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li><a href="{% url 'user_in' %}" class="active">Home</a></li>
+              <li class="has-sub">
+                <a href="{% url 'user_in' %}">Community</a>
+                <ul class="sub-menu">
+                  <li><a href="{% url 'view_community' %}">MyCommunity</a></li>
+                  <li><a href="../community" >Communities</a></li>
+                </ul> 
+              </li>
+
+              <!-- <li class="has-sub">
+                <a href="{% url 'user_in' %}">Community</a>
+                <ul class="sub-menu">
+                    <li><a href="#" class="nav-link" data-url="{% url 'view_community' %}">MyCommunity</a></li>
+                    <li><a href="#" class="nav-link" data-url="../community">Communities</a></li>
+                </ul> 
+            </li> -->
+
+              <li>
+                <a href="{% url 'meetings' %}">
+                  <i class="fa-solid fa-video" style="color: #007BFF; font-size: 10px;"></i> Meetings
+                </a>
+                
+              </li>
+              <li><a href="#">
+                  <i class="fa-solid fa-bell" style="color: #007BFF; font-size: 20px;"></i>&nbsp; Notification
+                  </a>
+              </li>
+
+            </ul>
+            <ul style="margin: auto;">
+              <li>
+                <a href="{% url 'EditUser' %}">
+
+                  <img src="{{ user.img.url }}{{ register.img.url}}/" alt="Profile" class="rounded-circle"
+                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;border: 1.5px solid blue;border-color: #3498db;">
+                </a>
+              </li>
+            </ul>
+            <div class="border-button">
+              <a id="modal_trigger" href="{% url 'logout' %}" class="sign-in-up"><i class="fa fa-user"></i>LOGOUT</a>
+            </div>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -130,7 +246,7 @@
     }
   }
 </style>
-
+<br><br><br><br><br>
 <div class="profile-container">
   
   <!-- Left Side: User Details -->
@@ -144,6 +260,10 @@
         <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Image">
       </div>
     {% endif %}
+
+    <div class="border-button">
+      <a id="modal_trigger" href="{% url 'logout' %}" class="sign-in-up"><i class="fa fa-sign-out "></i> LOGOUT</a>
+    </div>
     
     <div class="user-details">
       <p><span>Name:</span> {{ form.instance.Name }}</p>
@@ -160,7 +280,8 @@
       {{ form.as_p }}
 
       <a href="{% url 'change_userpass' %}" class="button-link">Change Password</a>
-      
+      <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+
       <button type="submit">Save Changes</button>
     </form>
     
@@ -175,4 +296,84 @@
 
 </div>
 
-{% endblock %}
+
+
+<br><br><br><br><br><br><br>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <p>Copyright © 2048 <a href="#">SnapX</a> Photo Contest Co., Ltd. All rights reserved.
+
+          Design: <a title="CSS Templates" rel="sponsored" href="#"
+            target="_blank">TemplateMo</a></p>
+      </div>
+    </div>
+  </div>
+  
+</footer>
+
+<!-- Scripts -->
+<script>
+  
+var player;
+
+function showVideo(event) {
+  event.preventDefault();
+  document.getElementById("videoContainer").style.display = "block";
+  document.getElementById("videoLink").style.display = "none";
+
+  // Load YouTube IFrame API script only once
+  if (!window.YT) {
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  } else if (player) {
+    player.playVideo();
+  }
+}
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('videoFrame', {
+    height: '315',
+    width: '560',
+    videoId: 'HZbG_k5kF2c',  // You can change this video ID
+    playerVars: { 'autoplay': 1, 'controls': 1 },
+    events: {
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    document.getElementById("videoContainer").style.display = "none";
+    document.getElementById("videoLink").style.display = "block";
+  }
+}
+
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('mouseenter', function() {
+          window.location.href = this.getAttribute('data-url');
+      });
+  });
+</script>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'user/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'user/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'user/assets/js/isotope.min.js' %}"></script>
+<script src="{% static 'user/assets/js/owl-carousel.js' %}"></script>
+
+<script src="{% static 'user/assets/js/tabs.js' %}"></script>
+<script src="{% static 'user/assets/js/popup.js' %}"></script>
+<script src="{% static 'user/assets/js/custom.js' %}"></script>
+
+</body>
+
+</html>

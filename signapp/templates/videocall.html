@@ -16,8 +16,15 @@
 
 
 <body>
-    <a id="id" href="{% url 'meetings' %}">Meetings</a>
-    <div id="root"></div>
+   <!-- <a href="{% url 'meetings' %}"  class="btn btn-primary" >meetings</a> -->
+
+   <a href="{% url 'meetings' %}" class="btn btn-primary">meetings</a>
+
+   
+    <div id="root">    {{user.id}}
+    </div>
+    <center>  <button id="joinNowBtn" style="background-color: rgb(0, 234, 255);">Save Video Link</button></center>
+
 </body>
 <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
 <script>
@@ -39,8 +46,8 @@ window.onload = function () {
     const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
     const userID = Math.floor(Math.random() * 10000) + "";
     const userName = "userName" + userID;
-    const appID = 64790357;
-    const serverSecret = "e6a95afc1d4cbf0f3eda9f7fa708f96a";
+    const appID = 1064379343;
+    const serverSecret = "97c44f8140ea498c16e098deefc3289d";
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
 
     
@@ -59,7 +66,7 @@ window.onload = function () {
            	turnOnCameraWhenJoining: true,
            	showMyCameraToggleButton: true,
            	showMyMicrophoneToggleButton: true,
-           	showAudioVideoSettingsButton: true,
+           	showAudioVideoSettingsButton: true, 
            	showScreenSharingButton: true,
            	showTextChat: true,
            	showUserList: true,
@@ -67,7 +74,42 @@ window.onload = function () {
            	layout: "Auto",
            	showLayoutButton: true,
          
-            });
+        });
+            // Handle the 'Join Now' button click event
+        document.getElementById("joinNowBtn").onclick = function () {
+            // Get the generated URL
+            const generatedUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID;
+
+            // Get the appointment ID passed from the view (assuming it's embedded in the page as a data attribute)
+            const appointmentId = {{ user.id }};  // Django variable for the appointment's pk (ID)
+
+            // Send an AJAX request to Django backend to save the URL
+                fetch(`/save_video_url/${appointmentId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',  // Include CSRF token for security
+                    },
+                    body: JSON.stringify({
+                        url: generatedUrl,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("URL saved successfully!");
+
+                        console.log("URL saved successfully!");
+                    } else {
+                        console.error("Error saving URL");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            };
+            
+
 }
 </script>
 

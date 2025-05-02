@@ -75,7 +75,12 @@
   </style>
 </head>
 <body>
-    
+
+  <div>
+    Return to my community:
+    <a href="{% url 'view_community' %}" class="btn-primary">My community</a>
+  </div>
+  
   <form method="post" enctype="multipart/form-data">
     <h1>Create New Community</h1>
     {% csrf_token %}

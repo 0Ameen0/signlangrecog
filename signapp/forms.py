@@ -31,7 +31,16 @@ class community_form(forms.ModelForm):
 class UserChatForm(forms.ModelForm):
     class Meta:
         model = UserChat
-        fields = ['message']
+        fields = ['message','reply_to']
         widgets = {
-            'message': forms.Textarea(attrs={'rows':2,'placeholder': 'Write your message...'})
+            'message': forms.Textarea(attrs={'rows':2,'placeholder': 'Write your message...'}),
+            'reply_to': forms.HiddenInput(),
+        }
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model=Feedback
+        fields=['feedback']
+        widgets = {
+            'feedback': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Write your feedback...'}),
         }

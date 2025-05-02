@@ -62,6 +62,62 @@
 
     <!-- App CSS -->
     <link rel="stylesheet" href="{% static 'chat/assets/css/style.css' %}">
+    <style>
+        .date-label {
+            text-align: center; /* Center the text */
+            margin: 10px 0; /* Optional: Add some margin for spacing */
+            font-weight: bold; /* Optional: Make the date label bold */
+            color: #888; /* Optional: Change the color of the date label */
+            width: 100%; /* Ensure it takes the full width of the container */
+            display: block; /* Make it a block element to center it */
+            margin-bottom: 5px; /* Optional: Add some margin below the date label */
+        }
+        .reply-message {
+            border-left: 4px solid #007bff;
+            padding-left: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #555;
+            background-color: #f9f9f9;
+        }
+        .chat-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa; /* Light background for visibility */
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            z-index: 1000;
+        }
+
+        .chat-footer .form-wrap {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+        }
+
+        .chat-footer .form-control {
+            flex-grow: 1;
+            height: 40px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-footer .form-btn {
+            margin-left: 10px;
+        }
+
+        .chat-footer .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+
+    </style>
 
 </head>
 
@@ -76,20 +132,20 @@
             <!-- Left Sidebar Menu -->
             <div class="sidebar-menu">
                 <div class="logo">
-                    <a href="{% url 'community' %}" class="logo-normal"><img src="{% static 'chat/assets/img/logo.svg' %}" alt="Logo"></a>
+                    <a href="{% url 'user_in' %}" class="logo-normal"><img src="{% static 'user/assets/images/Signifylogo.jpg' %}" alt="Logo"></a>
                 </div>
                 <div class="menu-wrap">
                     <div class="main-menu">
                         <ul class="nav">
                             <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Chats" data-bs-custom-class="tooltip-primary">
-                                <a href="index.html" data-bs-toggle="tab" data-bs-target="#chat-menu">
+                                <!-- <a href="index.html" data-bs-toggle="tab" data-bs-target="#chat-menu">
                                     <i class="ti ti-message-2-heart"></i>
-                                </a>
+                                </a> -->
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Contacts" data-bs-custom-class="tooltip-primary"> 
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#contact-menu">
+                                <!-- <a href="#" data-bs-toggle="tab" data-bs-target="#contact-menu">
                                     <i class="ti ti-user-shield"></i>
-                                </a>
+                                </a> -->
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Groups" data-bs-custom-class="tooltip-primary">
                                 <a href="#" class="active" data-bs-toggle="tab" data-bs-target="#group-menu">
@@ -97,19 +153,19 @@
                                 </a>
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Status" data-bs-custom-class="tooltip-primary">
-                                <a href="status.html" class="">
+                                <!-- <a href="status.html" class="">
                                     <i class="ti ti-circle-dot"></i>
-                                </a>
+                                </a> -->
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Calls" data-bs-custom-class="tooltip-primary">
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#call-menu">
+                                <!-- <a href="#" data-bs-toggle="tab" data-bs-target="#call-menu">
                                     <i class="ti ti-phone-call"></i>
-                                </a>
+                                </a> -->
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Profile" data-bs-custom-class="tooltip-primary">
-                                <a href="#" data-bs-toggle="tab" data-bs-target="#profile-menu">
+                                <!-- <a href="#" data-bs-toggle="tab" data-bs-target="#profile-menu">
                                     <i class="ti ti-user-circle"></i>
-                                </a>
+                                </a> -->
                             </li>
                             <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Settings" data-bs-custom-class="tooltip-primary">
                                 <a href="#" data-bs-toggle="tab" data-bs-target="#setting-menu">
@@ -2712,7 +2768,8 @@
                                     <div class="header-title d-flex align-items-center justify-content-between">
                                         <h4 class="mb-3">Group</h4>
                                         <div class="d-flex align-items-center mb-3">
-                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#new-group" class="add-icon btn btn-primary p-0 d-flex align-items-center justify-content-center fs-16 me-2"><i class="ti ti-plus"></i></a>
+                                            <!-- <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#new-group" class="add-icon btn btn-primary p-0 d-flex align-items-center justify-content-center fs-16 me-2"><i class="ti ti-plus"></i></a> -->
+                                             <a href="{% url 'community_admin' %}"class="add-icon btn btn-primary p-0 d-flex align-items-center justify-content-center fs-16 me-2"><i class="ti ti-plus"></i></a>
                                             <div class="dropdown">
                                                 <a href="javascript:void(0);" data-bs-toggle="dropdown" class="fs-16 text-default">
                                                     <i class="ti ti-dots-vertical"></i>
@@ -2726,13 +2783,14 @@
                                
                                     <!-- Chat Search -->
                                     <div class="search-wrap">
-                                        <form action="#">
+                                        <form action="javascript:void(0);">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search For Contacts or Messages">
+                                                <input type="text" class="form-control" placeholder="Search For Groups">
                                                 <span class="input-group-text"><i class="ti ti-search"></i></span>
                                             </div>
                                         </form>
                                     </div>
+                                    
                                     <!-- /Chat Search --> 
                                 </div>       
         
@@ -2748,17 +2806,19 @@
 
 
                                         
-                                            <div class="chat-list">
-                                                <a href="#" class="chat-user-list">
+                                        <!-- <div class="chat-list">
+                                            {% for comm in user_communities %}
+                                                <a href="{% url 'chat' comm.community_id.id %}" class="chat-user-list">
                                                     <div class="avatar avatar-lg online me-2">
-                                                        <!-- <img src="{% static 'chat/assets/img/groups/group-01.jpg' %}" class="rounded-circle" alt="image"> -->
-                                
-                                                        <img src="#" alt="Logo">
-                                                        
+                                                        {% if comm.community_id.community_logo %}
+                                                            <img src="{{ comm.community_id.community_logo.url }}" alt="Logo">
+                                                        {% else %}
+                                                            <img src="{% static 'users/icons/default-logo.png' %}" alt="Default Logo">
+                                                        {% endif %}
                                                     </div>
                                                     <div class="chat-user-info">
                                                         <div class="chat-user-msg">
-                                                            <h6></h6>
+                                                            <h6>{{ comm.community_id.community_name }}</h6>
                                                             <p><span class="animate-typing">is typing
                                                                 <span class="dot"></span>
                                                                 <span class="dot"></span>
@@ -2787,7 +2847,55 @@
                                                         <li><a class="dropdown-item" href="#"><i class="ti ti-square-check me-2"></i>Mark as Unread</a></li>
                                                     </ul>
                                                 </div>     
-                                            </div>
+                                            {% endfor %}
+                                        </div> -->
+                                        <div class="chat-list">
+                                            {% for comm in all_communities %}
+                                                <a href="{% url 'chat' comm.id %}" class="chat-user-list">
+                                                    <div class="avatar avatar-lg online me-2">
+                                                        {% if comm.community_logo %}
+                                                            <img src="{{ comm.community_logo.url }}" alt="Logo">
+                                                        {% else %}
+                                                            <img src="{% static 'users/icons/default-logo.png' %}" alt="Default Logo">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="chat-user-info">
+                                                        <div class="chat-user-msg">
+
+                                                            
+                                                            <h6>{{ comm.community_name }}</h6>
+                                                            
+                                                            <p>
+                                                                <span class="animate-typing">is typing
+                                                                    <span class="dot"></span>
+                                                                    <span class="dot"></span>
+                                                                    <span class="dot"></span>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="chat-user-time">
+                                                            <span class="time">{{ message.time }}</span>
+                                                            <div class="chat-pin">
+                                                                <i class="ti ti-pin me-2"></i>
+                                                                <span class="count-message fs-12 fw-semibold">12</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <div class="chat-dropdown">
+                                                    <a href="#" data-bs-toggle="dropdown">
+                                                        <i class="ti ti-dots-vertical"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-end p-3">
+                                                        <li><a class="dropdown-item" href="#"><i class="ti ti-box-align-right me-2"></i>Archive Group</a></li>
+                                                        <li><a class="dropdown-item" href="#"><i class="ti ti-volume-off me-2"></i>Mute Notification</a></li>
+                                                        <li><a class="dropdown-item" href="#"><i class="ti ti-logout-2 me-2"></i>Exit Group</a></li>
+                                                        <li><a class="dropdown-item" href="#"><i class="ti ti-pinned me-2"></i>Pin Group</a></li>
+                                                        <li><a class="dropdown-item" href="#"><i class="ti ti-square-check me-2"></i>Mark as Unread</a></li>
+                                                    </ul>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
 
 
 
@@ -4681,7 +4789,6 @@
             <!-- Chat -->
             <div class="chat chat-messages show" id="middle">
                 <div>
-
                     <div class="chat-header">
                         <div class="user-details">
                             <div class="d-xl-none">
@@ -4692,29 +4799,26 @@
                             <div class="avatar avatar-lg online flex-shrink-0">
                                 <img src="{% static 'chat/assets/img/groups/group-01.jpg' %}" class="rounded-circle" alt="image">
                             </div>
+                            
                             <div class="ms-2 overflow-hidden">
-                                <h6>The Dream Team</h6>
-                                <p class="last-seen text-truncate">40 Member, <span class="text-success">24 Online</span></p>
+                                <h6>{{ community.community_name }}</h6>
+                                <p class="last-seen text-truncate">
+                                    {{ member_count }} Member{% if member_count != 1 %}s{% endif %}, 
+                                    <span class="text-success">{{ member_count }} Online</span>
+                                </p>
                             </div>
                         </div>
                         <div class="chat-options">
                             <ul>
                                 <li>
                                     <div class="avatar-list-stacked avatar-group-md d-flex">
+                                        {% for user in comm %}
                                         <span class="avatar avatar-rounded">
-                                            <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" alt="img">
+                                            <img src="{{ user.member_id.member_userid.img.url }}" alt="img">
                                         </span>
-                                        <span class="avatar avatar-rounded">
-                                            <img src="{% static 'chat/assets/img/profiles/avatar-01.jpg' %}" alt="img">
-                                        </span>
-                                        <span class="avatar avatar-rounded">
-                                            <img src="{% static 'chat/assets/img/profiles/avatar-02.jpg' %}" alt="img">
-                                        </span>
-                                        <span class="avatar avatar-rounded">
-                                            <img src="{% static 'chat/assets/img/profiles/avatar-04.jpg' %}" alt="img">
-                                        </span>
+                                        {% endfor %}
                                         <a class="avatar bg-primary avatar-rounded text-fixed-white" href="javascript:void(0);">
-                                            35+
+                                            {{ member_count}}+
                                         </a>
                                     </div>
                                 </li>
@@ -4733,7 +4837,7 @@
                                         <i class="ti ti-dots-vertical" ></i>
                                     </a>
                                      <ul class="dropdown-menu dropdown-menu-end p-3">
-                                        <li><a href="index.html" class="dropdown-item"><i class="ti ti-x me-2"></i>Close Group</a></li>
+                                        <li><a href="#" class="dropdown-item"><i class="ti ti-x me-2"></i>Close Group</a></li>
                                         <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#mute-notification"><i class="ti ti-volume-off me-2"></i>Mute Notification</a></li>
                                         <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#disappearing-messages"><i class="ti ti-clock-hour-4 me-2"></i>Disappearing Message</a></li>
                                         <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clear-chat"><i class="ti ti-clear-all me-2"></i>Clear Message</a></li>
@@ -4748,7 +4852,7 @@
                         <div class="chat-search search-wrap contact-search">
                             <form >
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search Contacts">
+                                    <input type="text" class="form-control" placeholder="Search">
                                     <span class="input-group-text"><i class="ti ti-search"></i></span>
                                 </div>
                             </form>
@@ -4757,846 +4861,179 @@
                     </div>
                     <div class="chat-body chat-page-group slimscroll">
                         <div class="messages">
-                            {% for message in messages %}
-                                {% if message.sender_id.id == user.id %}
-                                    <!-- Message from logged-in user (Right side) -->
-                                    <div class="chats chats-right">
-                                        <div class="chat-content">
-                                            <div class="chat-profile-name text-end">
-                                                <h6>You<i class="ti ti-circle-filled fs-7 mx-2"></i>
-                                                    <span class="chat-time">{{ message.time }}</span>
-                                                    <span class="msg-read success"><i class="ti ti-checks"></i></span>
-                                                </h6>                                        
+                            {% for date_label, messages in grouped_messages.items %}
+                                <div class="date-label">{{ date_label }}</div>
+                                {% for message in messages %}
+                                    {% if message.sender_id.id == user.id %}
+                                        <!-- Message from logged-in user (Right side) -->
+                                        <div class="chats chats-right">
+                                            <div class="chat-content">
+                                                <div class="chat-profile-name text-end">
+                                                    <h6>You
+                                                        <i class="ti ti-circle-filled fs-7 mx-2"></i>
+                                                        <span class="chat-time">{{ message.time }}</span>
+                                                        <span class="msg-read success"><i class="ti ti-checks"></i></span>
+                                                    </h6>
+                                                </div>
+                                                <div class="chat-info">
+                                                    {% if message.reply_to %}
+                                                        <div class="reply-message">
+                                                            <p><strong>Reply:</strong> {{ message.reply_to.message }}</p>
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="message-content">
+                                                        {{ message.message }}
+                                                        <div class="emoj-group">
+                                                            <ul>
+                                                                <li class="emoj-action">
+                                                                    <a href="javascript:void(0);"><i class="ti ti-mood-smile"></i></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#forward-message">
+                                                                        <i class="ti ti-arrow-forward-up"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="reply-btn" data-message-id="{{ message.id }}" data-message-text="{{ message.message }}">
+                                                                        <i class="ti ti-reply"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="chat-info">
-                                                <div class="message-content" id="right-message">
-                                                    {{ message.message }}
-                                                    <div class="emoj-group">
-                                                        <ul>
-                                                            <li class="emoj-action">
-                                                                <a href="javascript:void(0);"><i class="ti ti-mood-smile"></i></a>
-                                                            </li>
-                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                        </ul>
-                                                    </div>                                           
-                                                </div>   
+                                            <div class="chat-avatar">
+                                                <img src="{{ message.sender_id.register.img.url }}" class="rounded-circle dreams_chat" alt="image">
                                             </div>
                                         </div>
-                                        <div class="chat-avatar">
-                                            <img src="#" class="rounded-circle dreams_chat" alt="image">
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <!-- Message from other users (Left side) -->
-                                    <div class="chats">
-                                        <div class="chat-avatar">
-                                            <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="image">
-                                        </div>
-                                        <div class="chat-content">
-                                            <div class="chat-profile-name">
-                                                <h6>{{ message.sender_id.Email }}
-                                                    <i class="ti ti-circle-filled fs-7 mx-2"></i>
-                                                    <span class="chat-time">{{ message.time }}</span>
-                                                    <span class="msg-read success"><i class="ti ti-checks"></i></span>
-                                                </h6>
+                                    {% else %}
+                                        <!-- Message from other users (Left side) -->
+                                        <div class="chats">
+                                            <div class="chat-avatar">
+                                                <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="image">
                                             </div>
-                                            <div class="chat-info">
-                                                <div class="message-content" id="left-message">
-                                                    {{ message.message }}
-                                                    <div class="emoj-group">
-                                                        <ul>
-                                                            <li class="emoj-action">
-                                                                <a href="javascript:void(0);"><i class="ti ti-mood-smile"></i></a>
-                                                            </li>
-                                                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                        </ul>
+                                            <div class="chat-content">
+                                                <div class="chat-profile-name">
+                                                    <h6>{{ message.sender_id.Email }}
+                                                        <i class="ti ti-circle-filled fs-7 mx-2"></i>
+                                                        <span class="chat-time">{{ message.time }}</span>
+                                                    </h6>
+                                                </div>
+                                                <div class="chat-info">
+                                                    {% if message.reply_to %}
+                                                        <div class="reply-message">
+                                                            <p><strong>Reply:</strong> {{ message.reply_to.message }}</p>
+                                                        </div>
+                                                    {% endif %}
+                                                    <div class="message-content">
+                                                        {{ message.message }}
+                                                        <div class="emoj-group">
+                                                            <ul>
+                                                                <li class="emoj-action">
+                                                                    <a href="javascript:void(0);"><i class="ti ti-mood-smile"></i></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#forward-message">
+                                                                        <i class="ti ti-arrow-forward-up"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="reply-btn" data-message-id="{{ message.id }}" data-message-text="{{ message.message }}">
+                                                                        <i class="ti ti-reply"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
-                        <!-- </div>
-                    </div> -->
-                    
-
-
-                            <!-- <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Edward Lietz<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="message-content">
-                                            Hey Design Dynamos! How's everyone doing today?
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-file-export me-2"></i>Copy</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div>   
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chats chats-right">
-                                <div class="chat-content">
-                                    <div class="chat-profile-name text-end">
-                                        <h6>You<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>                                        
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div>   
-                                        <div class="message-content">
-                                            Hey Edward! Doing well. Just finished up a client meeting. How's everyone else?
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>                                           
-                                        </div>   
-                                    </div>
-                                    <div class="emonji-wrap">
-                                        <a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}" class="me-2" alt="icon">24</a>
-                                        <a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}" class="me-2" alt="icon">15</a>
-                                        <a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-04.svg' %}" class="me-2" alt="icon">15</a>
-                                    </div>
-                                </div>
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-17.jpg' %}" class="rounded-circle dreams_chat" alt="image">
-                                </div>
-                            </div>    
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-01.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Aaryian Jose<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:40 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="message-content">
-										Hi all! I'm great, just wrapping up the wireframe for the new project. Excited to share it with you guys!				                                       
-                                    </div>
-                                    <div class="emonji-wrap">
-                                        <a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}" class="me-2" alt="icon">24</a>
-                                        <a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}" class="me-2" alt="icon">15</a>
-                                        <a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-04.svg' %}" class="me-2" alt="icon">15</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-02.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Aaryian Jose<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:40 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="message-content">
-										<span class="text-primary">@Aaryian Jose,</span> can you share the wireframe here? Would love to give feedback before our meeting later.			                                       
-                                    </div>
-                                </div>
-                            </div>                            
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-01.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Aaryian Jose<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="message-content">
-                                            <div class="file-attach">
-                                                <span class="file-icon">
-                                                    <i class="ti ti-files"></i>
-                                                </span>
-                                                <div class="ms-2 overflow-hidden">
-                                                    <h6 class="mb-1">Ecommerce.zip</h6>
-                                                    <p>14.23 KB</p>
-                                                </div>
-                                                <a href="javascript:void(0);" class="download-icon">
-                                                    <i class="ti ti-download"></i>
-                                                </a>
-                                            </div>
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>                                    
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chats chats-right">
-                                <div class="chat-content">
-                                    <div class="chat-profile-name justify-content-end">
-                                        <h6>You<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>                                        
-                                    </div>
-                                    <div class="message-content">
-                                        Send me background images if any for our new project??
-                                        <div class="emoj-group wrap-emoji-group ">
-                                            <ul>
-                                                <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                    <div class="emoj-group-list">
-                                                        <ul>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                            <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                                <li><a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                            </ul>
-                                        </div>                                       
-                                    </div>
-                                </div>
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-17.jpg' %}" class="rounded-circle dreams_chat" alt="image">
-                                </div>
-                            </div>                            
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Edward Lietz<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="message-content">
-                                            <div class="chat-img">
-                                                <div class="img-wrap">
-                                                    <img src="{% static 'chat/assets/img/gallery/gallery-01.jpg' %}" alt="img">
-                                                    <div class="img-overlay">
-                                                        <a class="gallery-img" data-fancybox="gallery-img" href="{% static 'chat/assets/img/gallery/gallery-01.jpg' %}" title="Demo 01"><i class="ti ti-eye"></i></a>
-                                                        <a href="#"><i class="ti ti-download"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="img-wrap">
-                                                    <img src="{% static 'chat/assets/img/gallery/gallery-02.jpg' %}" alt="img">
-                                                    <div class="img-overlay">
-                                                        <a class="gallery-img" data-fancybox="gallery-img" href="{% static 'chat/assets/img/gallery/gallery-02.jpg' %}" title="Demo 02"><i class="ti ti-eye"></i></a>
-                                                        <a href="#"><i class="ti ti-download"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="img-wrap">
-                                                    <img src="{% static 'chat/assets/img/gallery/gallery-03.jpg' %}" alt="img">
-                                                    <div class="img-overlay">
-                                                        <a class="gallery-img" data-fancybox="gallery-img" href="{% static 'chat/assets/img/gallery/gallery-03.jpg' %}" title="Demo 03"><i class="ti ti-eye"></i></a>
-                                                        <a href="#"><i class="ti ti-download"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="img-wrap">
-                                                    <img src="{% static 'chat/assets/img/gallery/gallery-04.jpg' %}" alt="img">
-                                                    <div class="img-overlay">
-                                                        <a class="gallery-img" data-fancybox="gallery-img" href="{% static 'chat/assets/img/gallery/gallery-04.jpg' %}" title="Demo 04"><i class="ti ti-eye"></i></a>
-                                                        <a href="#"><i class="ti ti-download"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="img-wrap">
-                                                    <img src="{% static 'chat/assets/img/gallery/gallery-05.jpg' %}" alt="img">
-                                                    <div class="img-overlay">
-                                                        <a class="gallery-img" data-fancybox="gallery-img" href="{% static 'chat/assets/img/gallery/gallery-05.jpg' %}" title="Demo     04"><i class="ti ti-eye"></i></a>
-                                                        <a href="#"><i class="ti ti-download"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <a class="gallery-img view-all d-flex align-items-center justify-content-center mt-3" href="{% static 'chat/assets/img/gallery/gallery-05.jpg' %}"  data-fancybox="gallery-img">
-                                                View All Images<i class="ti ti-arrow-right ms-2"></i>
-                                            </a>
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-check me-2"></i>Mark as Unread</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div>   
-                                    </div>
-                                </div>
-                            </div>                                                    
-                            <div class="chat-line">
-                                <span class="chat-date">Yesterday</span>
-                            </div> 
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-04.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Sarika Jain<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="message-content">
-                                            <a href="javascript:void(0);" class="link-info">@all</a> if anyone can you share final output video of current project?
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div> 
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Edward Lietz<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="message-content">
-                                            <div class="message-video">
-                                                <video width="400" controls>
-                                                    <source src="{% static 'chat/assets/img/video/video.mp4' %}" type="video/mp4">
-                                                    Your browser does not support HTML5 video.
-                                                </video>
-                                            </div>
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>                                    
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>                           
-                            <div class="chats chats-right">
-                                <div class="chat-content">
-                                    <div class="chat-profile-name text-end">
-                                        <h6>You<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6> 
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div>   
-                                        <div class="message-content">
-                                            Thanks for Sharing!!! Can we have a call  
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>                                    
-                                        </div>   
-                                    </div>
-                                </div>
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-17.jpg' %}" class="rounded-circle dreams_chat" alt="image">
-                                </div>
-                            </div>     
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-05.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Federico Wells<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="message-content">
-                                            <div class="chat-profile-name">
-                                                <h6>You</h6>
-                                            </div>
-                                            <div class="message-reply">
-                                                Thanks for Sharing!!! Can we have a call??
-                                            </div>
-                                            Yes Please
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>                                    
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>    
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-05.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Federico Wells<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="message-content">
-                                            <div class="file-attach">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="file-icon bg-danger text-white">
-                                                        <i class="ti ti-phone-call"></i>
-                                                    </span>
-                                                    <div class="ms-2 overflow-hidden">
-                                                        <h6 class="mb-1 text-truncate">Missed Audio Call</h6>
-                                                        <p>10 Min 23 Sec</p>
-                                                    </div>
-                                                </div>
-                                                <a href="javascript:void(0);" class="download-icon">
-                                                    <i class="ti ti-download"></i>
-                                                </a>
-                                            </div>      
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>                                    
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div>                           
-                            <div class="chats chats-right">
-                                <div class="chat-content">
-                                    <div class="chat-profile-name text-end">
-                                        <h6>You<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6> 
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="chat-actions">
-                                            <a class="#" href="#" data-bs-toggle="dropdown">
-                                                <i class="ti ti-dots-vertical"></i>
-                                            </a>
-                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#contact-message"><i class="ti ti-info-circle me-2"></i>Message Info</a></li>
-                                                <li><a class="dropdown-item reply-button" href="#"><i class="ti ti-arrow-back-up me-2"></i>Reply</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-arrow-forward-up-double me-2"></i>Forward</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-heart me-2"></i>Mark as Favourite</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-edit me-2"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete Group</a></li>
-                                            </ul>
-                                        </div>   
-                                        <div class="message-content">
-                                            <div class="file-attach">
-                                                <span class="file-icon bg-success text-white">
-                                                    <i class="ti ti-phone-incoming"></i>
-                                                </span>
-                                                <div class="ms-2 overflow-hidden">
-                                                    <h6 class="mb-1">Audio Call Ended</h6>
-                                                    <p>07 Min 34 Sec</p>
-                                                </div>
-                                                <a href="javascript:void(0);" class="download-icon">
-                                                    <i class="ti ti-download"></i>
-                                                </a>
-                                            </div>  
-                                            <div class="emoj-group">
-                                                <ul>
-                                                    <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                        <div class="emoj-group-list">
-                                                            <ul>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-03.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-10.svg' %}"  alt="Icon"></a></li>
-                                                                <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-09.svg' %}"  alt="Icon"></a></li>
-                                                                <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                                </ul>
-                                            </div>                           
-                                        </div>   
-                                    </div>
-                                </div>
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-17.jpg' %}" class="rounded-circle dreams_chat" alt="image">
-                                </div>
-                            </div>  
-                            <div class="chats">
-                                <div class="chat-avatar">
-                                    <img src="{% static 'chat/assets/img/profiles/avatar-05.jpg' %}" class="rounded-circle" alt="image">
-                                </div>
-                                <div class="chat-content">
-                                    <div class="chat-profile-name">
-                                        <h6>Federico Wells<i class="ti ti-circle-filled fs-7 mx-2"></i><span class="chat-time">02:39 PM</span><span class="msg-read success"><i class="ti ti-checks"></i></span></h6>
-                                    </div>
-                                    <div class="message-content">
-                                        <span class="animate-typing">is typing
-                                            <span class="dot"></span>
-                                            <span class="dot"></span>
-                                            <span class="dot"></span>
-                                            </span>
-                                        <div class="emoj-group">
-                                            <ul>
-                                                <li class="emoj-action"><a href="javascript:void(0);"  ><i class="ti ti-mood-smile"></i></a>
-                                                    <div class="emoj-group-list">
-                                                        <ul>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                                            <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                                            <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                                <li><a href="#" data-bs-toggle="modal" data-bs-target="#forward-message"><i class="ti ti-arrow-forward-up"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                        -->
-                        
                         </div>
                     </div>
-                </div>
-                <div class="chat-footer">
-                    <form class="footer-form" method="POST" action="#">
-                        {% csrf_token %}
-                        <div class="chat-footer-wrap">
-                            <div class="form-item">
-                                <a href="#" class="action-circle"><i class="ti ti-microphone"></i></a>
-                            </div>
-                            <div class="form-wrap">
-                                <input type="text" class="form-control" name="message" placeholder="Type Your Message" required>
-                            </div>
-                            <div class="form-item emoj-action-foot">
-                                <a href="#" class="action-circle"><i class="ti ti-mood-smile"></i></a>
-                                <div class="emoj-group-list-foot down-emoji-circle">
-                                    <ul>
-                                        <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}" alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}" alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}" alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}" alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}" alt="Icon"></a></li>
-                                        <li class="add-emoj"><a href="javascript:void(0);"><i class="ti ti-plus"></i></a></li>
-                                    </ul>
+                    
+                    <!-- Reply Context -->
+                    <div id="reply-context" class="reply-context d-none">
+                        <p class="reply-message-text"></p>
+                        <button type="button" class="btn btn-sm btn-danger cancel-reply">Cancel</button>
+                    </div>
+                    
+                    <!-- Message Input Form -->
+
+                    <div class="chat-footer">
+                        <form class="footer-form" method="POST" action="#">
+                            {% csrf_token %}
+                            <div class="chat-footer-wrap">
+                                <div class="form-item">
+                                    <a href="#" class="action-circle"><i class="ti ti-microphone"></i></a>
                                 </div>
-                            </div>                            
-                            <div class="form-item position-relative d-flex align-items-center justify-content-center">
-                                <a href="#" class="action-circle file-action position-absolute">
-                                    <i class="ti ti-folder"></i>
-                                </a>
-                                <input type="file" class="open-file position-relative" name="files" id="files">
-                            </div>
-                            <div class="form-item">
-                                <a href="#" data-bs-toggle="dropdown">
-                                    <i class="ti ti-dots-vertical"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end p-3">
-                                    <a href="#" class="dropdown-item"><i class="ti ti-file-text me-2"></i>Document</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-camera-selfie me-2"></i>Camera</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-photo-up me-2"></i>Gallery</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-music me-2"></i>Audio</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-map-pin-share me-2"></i>Location</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-user-check me-2"></i>Contact</a>
+                                <div class="form-wrap">
+                                    <input type="text" class="form-control" name="message" placeholder="Type Your Message" required>
                                 </div>
-                            </div>
-                            <div class="form-btn">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="ti ti-send"></i>
-                                </button>
-                            </div>
-                        </div>                        
-                    </form>
-                </div>
-                
-                <!-- <div class="chat-footer">
-                    <form class="footer-form">
-                        <div class="chat-footer-wrap">
-                            <div class="form-item">
-                                <a href="#"  class="action-circle"><i class="ti ti-microphone"></i></a>
-                            </div>
-                            <div class="form-wrap">
-                                <input type="text" class="form-control" placeholder="Type Your Message">
-                            </div>
-                            <div class="form-item emoj-action-foot">
-                                <a href="#" class="action-circle"><i class="ti ti-mood-smile"></i></a>
-                                <div class="emoj-group-list-foot down-emoji-circle">
-                                    <ul>
-                                        <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}"  alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}"  alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}"  alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}"  alt="Icon"></a></li>
-                                        <li><a href="javascript:void(0);" ><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}"  alt="Icon"></a></li>
-                                        <li class="add-emoj"><a href="javascript:void(0);" ><i class="ti ti-plus"></i></a></li>
-                                    </ul>
+                                <div class="form-item emoj-action-foot">
+                                    <a href="#" class="action-circle"><i class="ti ti-mood-smile"></i></a>
+                                    <div class="emoj-group-list-foot down-emoji-circle">
+                                        <ul>
+                                            <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-02.svg' %}" alt="Icon"></a></li>
+                                            <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-05.svg' %}" alt="Icon"></a></li>
+                                            <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-06.svg' %}" alt="Icon"></a></li>
+                                            <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-07.svg' %}" alt="Icon"></a></li>
+                                            <li><a href="javascript:void(0);"><img src="{% static 'chat/assets/img/icons/emonji-08.svg' %}" alt="Icon"></a></li>
+                                            <li class="add-emoj"><a href="javascript:void(0);"><i class="ti ti-plus"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>                            
+                                <div class="form-item position-relative d-flex align-items-center justify-content-center">
+                                    <a href="#" class="action-circle file-action position-absolute">
+                                        <i class="ti ti-folder"></i>
+                                    </a>
+                                    <input type="file" class="open-file position-relative" name="files" id="files">
                                 </div>
-                            </div>                            
-                            <div class="form-item position-relative d-flex align-items-center justify-content-center ">
-                                <a href="#" class="action-circle file-action position-absolute">
-                                    <i class="ti ti-folder"></i>
-                                </a>
-                                <input type="file" class="open-file position-relative" name="files" id="files">
-                            </div>
-                            <div class="form-item">
-                                <a href="#" data-bs-toggle="dropdown">
-                                    <i class="ti ti-dots-vertical"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end p-3">
-                                    <a href="#" class="dropdown-item"><i class="ti ti-file-text me-2"></i>Document</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-camera-selfie me-2"></i>Camera</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-photo-up me-2"></i>Gallery</a>
-                                    <a href="#" class="dropdown-item" ><i class="ti ti-music me-2"></i>Audio</a>
-                                    <a href="#" class="dropdown-item"><i class="ti ti-map-pin-share me-2"></i>Location</a>
-                                    <a href="#" class="dropdown-item" ><i class="ti ti-user-check me-2"></i>Contact</a>
+                                <div class="form-item">
+                                    <a href="#" data-bs-toggle="dropdown">
+                                        <i class="ti ti-dots-vertical"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end p-3">
+                                        <a href="#" class="dropdown-item"><i class="ti ti-file-text me-2"></i>Document</a>
+                                        <a href="#" class="dropdown-item"><i class="ti ti-camera-selfie me-2"></i>Camera</a>
+                                        <a href="#" class="dropdown-item"><i class="ti ti-photo-up me-2"></i>Gallery</a>
+                                        <a href="#" class="dropdown-item"><i class="ti ti-music me-2"></i>Audio</a>
+                                        <a href="#" class="dropdown-item"><i class="ti ti-map-pin-share me-2"></i>Location</a>
+                                        <a href="#" class="dropdown-item"><i class="ti ti-user-check me-2"></i>Contact</a>
+                                    </div>
+                                </div>
+                                <div class="form-btn">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="ti ti-send"></i>
+                                    </button>
+                                </div>
+                            </div>                        
+                        </form>
+                    </div>
+
+
+                    <!-- <div class="chat-footer">
+                        <form method="POST" action="#">
+                            {% csrf_token %}
+                            <div class="chat-footer-wrap">
+                                <div class="form-wrap">
+                                    <input type="text" class="form-control" name="message" placeholder="Type Your Message" required>
+                                    <input type="hidden" id="reply_to_id" name="reply_to_id">
+                                </div>
+                                <div class="form-btn">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="ti ti-send"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="form-btn">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="ti ti-send"></i>
-                                </button>
-                            </div>
-                        </div>                        
-                    </form>
-                </div> -->
+                        </form>
+                    </div> -->
+                    
+                </div>    
+                    
             </div>
             <!-- /Chat -->
 
@@ -5613,8 +5050,8 @@
                                 <div class="avatar avatar-xxl online mb-2">
                                     <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="img">
                                 </div>
-                                <h6>The Dream Team</h6>
-                                <p>Group - 40 Participants</p>
+                                <h6>{{ community.community_name }}</h6>
+                                <p>{{ member_count }} Member{% if member_count != 1 %}s{% endif %}</p>
                             </div>
                             <div class="row gx-3">
                                 <div class="col">
@@ -5630,7 +5067,7 @@
                                     </a>
                                 </div>
                                 <div class="col">
-                                    <a class="action-wrap" href="javascript:void(0);">
+                                    <a class="action-wrap" href="#">
                                         <i class="ti ti-brand-hipchat"></i>
                                         <p>Chat</p>
                                     </a>
@@ -5638,7 +5075,7 @@
                                 <div class="col">
                                     <a class="action-wrap" href="javascript:void(0);">
                                         <i class="ti ti-search"></i>
-                                        <p>Search</p>
+                                        <p></p>
                                     </a>
                                 </div>
                             </div>
@@ -5648,12 +5085,12 @@
                                     <div class="card-body">
                                         <div class="d-flex profile-info-content justify-content-between align-items-center border-bottom pb-3 mb-3">
                                             <div>                                                
-                                                <h6 class="fs-14">Group Description</h6>
+                                                <h6 class="fs-14">{{ community.community_desc }}</h6>
                                                 <p class="fs-16">Innovate. Create. Inspire.</p>
                                             </div>
                                             <a href="javascript:void(0);" class="link-icon"><i class="ti ti-edit-circle"></i></a>
                                         </div>
-                                        <p class="fs-12">Group created by Edward Lietz, on 18 Feb 2022 at 1:32 pm</p>
+                                        <p class="fs-12">{{ members.admin_id }}, on 18 Feb 2022 at 1:32 pm</p>
                                     </div>
                                 </div>
                             </div>
@@ -5890,40 +5327,52 @@
                             </div>
                             <div class="content-wrapper other-info">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h5 class="sub-title">40 Participants</h5>
+                                    <h5 class="sub-title">{{ member_count }} Member{% if member_count != 1 %}s{% endif %}</h5>
                                     <a href="javascript:void(0);" class="link-icon"><i class="ti ti-search"></i></a>
                                 </div>
                                 <div class="card">
                                     <div class="card-body">
+                                        {% for com in comm %}
                                         <div class="card mb-3">
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex align-items-center overflow-hidden">
-                                                        <span class="avatar avatar-lg online flex-shrink-0">
-                                                            <img src="{% static 'chat/assets/img/profiles/avatar-02.jpg' %}" alt="img" class="rounded-circle">
+                                                        <span class="avatar avatar-rounded">
+                                                            <img src="{{ com.member_id.member_userid.img.url }}" alt="img">
                                                         </span>
+                                                        
+                                                        
                                                         <div class="ms-2 overflow-hidden">
-                                                            <h6 class="text-truncate mb-1">Sarika Jain</h6>
-                                                            <p>Busy</p>
+                                                            <h6 class="text-truncate mb-1">{{ com.member_id.member_userid.Name }}</h6>
+                                                            <!-- <p>Busy</p> -->
                                                         </div>
+                                                      
                                                     </div>
                                                     <div class="d-flex align-items-center">
+
+                                                        {% if user in comm.admin_id.all %}
                                                         <span class="badge badge-primary-transparent me-2">Admin</span>
+                                                        {% else %}
+                                                        <span class="badge badge-primary-transparent me-2">Member</span>
+                                                        {% endif %}
+                                                        {% if request.user == com.member_id.member_userid %}
                                                         <div class="dropdown">
                                                             <a href="#" data-bs-toggle="dropdown">
                                                                 <i class="ti ti-dots-vertical"></i>
                                                             </a>                                
                                                             <ul class="dropdown-menu dropdown-menu-end p-3">
-                                                                <li><a class="dropdown-item" href="#"><i class="ti ti-logout-2 me-2"></i>Exit Group</a></li>
+                                                                <li><a class="dropdown-item" href=""><i class="ti ti-logout-2 me-2"></i>Exit Group</a></li>
                                                                 <li><a class="dropdown-item" href="#"><i class="ti ti-trash me-2"></i>Delete</a></li>
                                                                 <li><a class="dropdown-item" href="#"><i class="ti ti-pinned me-2"></i>Unpin Chat</a></li>
                                                             </ul>
                                                         </div>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card mb-3">
+                                        {% endfor %}
+                                        <!-- <div class="card mb-3">
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex align-items-center overflow-hidden">
@@ -6009,20 +5458,20 @@
                                             <a class="view-all link-primary d-inline-flex align-items-center justify-content-center" href="javascript:void(0);">
                                                 View All(35 more)<i class="ti ti-arrow-right ms-2"></i>
                                             </a>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="content-wrapper other-info mb-0">
                                 <div class="card mb-0">
                                     <div class="card-body list-group profile-item">
-                                        <a href="javascript:void(0);" class="list-group-item" data-bs-toggle="modal" data-bs-target="#group-logout">
+                                        <a href="../../exitgroup/{{community.id}}" class="list-group-item" data-bs-toggle="modal" data-bs-target="#group-logout">
                                             <div class="profile-info">
                                                 <h6><i class="ti ti-logout-2 me-2 text-danger"></i>Exit Group</h6>
                                             </div>
-                                            <div class="d-flex align-items-center">
+                                            <!-- <div class="d-flex align-items-center">
                                                 <span class="link-icon"><i class="ti ti-chevron-right"></i></span>
-                                            </div>
+                                            </div> -->
                                         </a>
                                         <a href="javascript:void(0);" class="list-group-item" data-bs-toggle="modal" data-bs-target="#report-group">
                                             <div class="profile-info">
@@ -8246,6 +7695,80 @@
 		
     </div>
     <!-- /Main Wrapper -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let searchInput = document.getElementById("searchInput");
+            let chatItems = document.querySelectorAll(".chat-item");
+    
+            searchInput.addEventListener("keyup", function () {
+                let searchTerm = searchInput.value.toLowerCase().trim(); // Get input and remove spaces
+                
+                chatItems.forEach(function (item) {
+                    let communityName = item.querySelector(".chat-name").textContent.toLowerCase(); // Get name
+                    
+                    if (communityName.includes(searchTerm)) {
+                        item.style.display = "block"; // Show matching items
+                    } else {
+                        item.style.display = "none"; // Hide non-matching items
+                    }
+                });
+            });
+        });
+
+
+
+        document.querySelectorAll('.reply-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const messageId = this.getAttribute('data-message-id');
+                const messageText = this.getAttribute('data-message-text');
+
+                // Update hidden input and reply context
+                document.getElementById('reply_to_id').value = messageId;
+                const replyContext = document.getElementById('reply-context');
+                replyContext.querySelector('.reply-message-text').textContent = `Replying to: ${messageText}`;
+                replyContext.classList.remove('d-none');
+            });
+        });
+
+        document.querySelector('.cancel-reply').addEventListener('click', function() {
+            document.getElementById('reply_to_id').value = ""; // Clear reply ID
+            const replyContext = document.getElementById('reply-context');
+            replyContext.classList.add('d-none'); // Hide reply context
+            replyContext.querySelector('.reply-message-text').textContent = "";
+        });
+
+
+        
+        // JavaScript to handle reply button clicks
+        // document.querySelectorAll('.reply-btn').forEach(button => {
+        //     button.addEventListener('click', function(event) {
+        //         event.preventDefault(); // Prevent the default link behavior
+        //         const messageId = this.getAttribute('data-message-id');
+        //         const messageText = this.closest('.chat-info').querySelector('.message-content').innerText; // Get the message text
+        //         document.getElementById('reply_to_id').value = messageId; // Set the hidden input value
+        //         document.querySelector('.footer-form .form-wrap input[name="message"]').value = `Replying to: ${messageText}`; // Set the input value to indicate a reply
+        //     });
+        // });
+
+        // JavaScript to handle reply button clicks
+        // document.querySelectorAll('.reply-btn').forEach(button => {
+        //     button.addEventListener('click', function(event) {
+        //         event.preventDefault(); // Prevent the default link behavior
+        //         const messageId = this.getAttribute('data-message-id');
+        //         const messageText = this.getAttribute('data-message-text'); // Get the message text from the data attribute
+        //         document.getElementById('reply_to_id').value = messageId; // Set the hidden input value
+        //         document.querySelector('.footer-form .form-wrap input[name="message"]').value = `Replying to: ${messageText}`; // Set the input value to indicate a reply
+        //     });
+        // });
+
+
+
+        
+
+    </script>
+    
+    
 	
 	<!-- jQuery -->
     <script data-cfasync="false" src="{% static 'chat/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="{% static 'chat/assets/js/jquery-3.7.1.min.js' %}" type="5541f23b0a6da4a2cc119b55-text/javascript"></script>
