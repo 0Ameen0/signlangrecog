@@ -111,5 +111,119 @@
     {% endfor %}
   </ul>
   {% endif %}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // General input validator
+      function validateInput(input, pattern, validMsg, invalidMsg) {
+        let feedback = input.parentNode.querySelector('small');
+        if (!feedback) {
+          feedback = document.createElement('small');
+          feedback.style.display = 'block';
+          input.parentNode.appendChild(feedback);
+        }
+  
+        input.addEventListener('input', function () {
+          const value = input.value.trim();
+          if (!value) {
+            feedback.textContent = '❌ This field is required';
+            feedback.style.color = 'red';
+          } else if (!pattern.test(value)) {
+            feedback.textContent = '❌ ' + invalidMsg;
+            feedback.style.color = 'red';
+          } else {
+            feedback.textContent = '✅ ' + validMsg;
+            feedback.style.color = 'green';
+          }
+        });
+      }
+  
+      // Field-specific validations
+      const nameInput = document.querySelector('input[name="Name"]');
+      if (nameInput) {
+        validateInput(nameInput, /^[A-Za-z\s]{3,50}$/, 'Valid name', 'Only letters, min 3 characters');
+      }
+  
+      const genderInput = document.querySelector('select[name="Gender"]');
+      if (genderInput) {
+        const feedback = document.createElement('small');
+        feedback.style.display = 'block';
+        genderInput.parentNode.appendChild(feedback);
+  
+        genderInput.addEventListener('change', function () {
+          if (genderInput.value === "") {
+            feedback.textContent = '❌ Please select a gender';
+            feedback.style.color = 'red';
+          } else {
+            feedback.textContent = '✅ Gender selected';
+            feedback.style.color = 'green';
+          }
+        });
+      }
+  
+      const contactInput = document.querySelector('input[name="Contact"]');
+      if (contactInput) {
+        validateInput(contactInput, /^[6-9]\d{9}$/, 'Valid contact number', 'Must be a 10-digit Indian mobile number');
+      }
+  
+      const imgInput = document.querySelector('input[name="img"]');
+      if (imgInput) {
+        const feedback = document.createElement('small');
+        feedback.style.display = 'block';
+        imgInput.parentNode.appendChild(feedback);
+  
+        imgInput.addEventListener('change', function () {
+          const file = imgInput.files[0];
+          if (!file) {
+            feedback.textContent = '❌ Please upload an image';
+            feedback.style.color = 'red';
+          } else if (!/\.(jpg|jpeg|png|gif)$/i.test(file.name)) {
+            feedback.textContent = '❌ Only image files (jpg, png, gif) allowed';
+            feedback.style.color = 'red';
+          } else {
+            feedback.textContent = '✅ Image selected';
+            feedback.style.color = 'green';
+          }
+        });
+      }
+  
+      const emailInput = document.querySelector('input[name="Email"]');
+      if (emailInput) {
+        validateInput(emailInput, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Valid email address', 'Enter a valid email address');
+      }
+  
+      const passwordInput = document.querySelector('input[name="Password"]');
+      if (passwordInput) {
+        validateInput(
+          passwordInput,
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          'Strong password',
+          'Min 8 chars, upper/lower, number, special char'
+        );
+      }
+  
+      // Final form validation
+      const form = document.getElementById('userreg');
+      form.addEventListener('submit', function (e) {
+        let isValid = true;
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(function (input) {
+          const feedback = input.parentNode.querySelector('small');
+          if (feedback && feedback.style.color === 'red') {
+            isValid = false;
+          }
+        });
+  
+        if (!isValid) {
+          e.preventDefault();
+          alert('❌ Please fix the validation errors before submitting.');
+        }
+      });
+    });
+  </script>
+  
+
+
+
 </body>
 </html>

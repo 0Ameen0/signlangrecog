@@ -90,10 +90,10 @@
                 </a>
                 
               </li>
-              <li><a href="#">
+              <!-- <li><a href="#">
                   <i class="fa-solid fa-bell" style="color: #007BFF; font-size: 20px;"></i>&nbsp; Notification
                   </a>
-              </li>
+              </li> -->
 
             </ul>
             <ul style="margin: auto;">
@@ -212,7 +212,7 @@
             searchTable();
         }
     </script>
-</head>
+</head> 
 <br><br><br><br><br>
 <body>
     <!-- <h1>RENEW THE API WITH NEW MAIL</h1> -->
@@ -225,23 +225,38 @@
     </div>
     <table>
         <thead>
+          <thead>
             <tr>
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Meet</th>
+                <th>Link</th>
             </tr>
         </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{user.Name}}</td>
-                <td>{{user.Contact}}</td>
+        
+        
+        </thead>
+        <tbody>                                                         
+          {% for user in users %}
+            {% if user.Name != request.user.username %}
+              <tr>
+                <td>{{ user.Name }}</td>
+                <td>{{ user.Contact }}</td>
+                <td><a class="icon" href="{% url 'video' user.id %}">video_camera_front</a></td>
                 <td>
-                    <a class="icon" href="{% url 'video' user.id %}">video_camera_front</a>
+                  {% if user.meet %}
+                    <a href="{{ user.meet }}" target="_blank" class="btn btn-outline-success" title="Join Call">
+                      {{ user.meet }} <i class="fa fa-video-camera"></i>
+                    </a>
+                  {% else %}
+                    <span class="text-muted">No call</span>
+                  {% endif %}
                 </td>
-            </tr>
-            {% endfor %}
+              </tr>
+            {% endif %}
+          {% endfor %}
         </tbody>
+        
     </table>
 </body>
 </html>

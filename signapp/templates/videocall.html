@@ -16,6 +16,7 @@
 
 
 <body>
+    <center>  <button id="joinNowBtn" style="background-color: rgb(0, 234, 255);">Save Video Link</button></center>
    <!-- <a href="{% url 'meetings' %}"  class="btn btn-primary" >meetings</a> -->
 
    <a href="{% url 'meetings' %}" class="btn btn-primary">meetings</a>
@@ -23,7 +24,7 @@
    
     <div id="root">    {{user.id}}
     </div>
-    <center>  <button id="joinNowBtn" style="background-color: rgb(0, 234, 255);">Save Video Link</button></center>
+    <!-- <center>  <button id="joinNowBtn" style="background-color: rgb(0, 234, 255);">Save Video Link</button></center> -->
 
 </body>
 <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
@@ -46,8 +47,8 @@ window.onload = function () {
     const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
     const userID = Math.floor(Math.random() * 10000) + "";
     const userName = "userName" + userID;
-    const appID = 1064379343;
-    const serverSecret = "97c44f8140ea498c16e098deefc3289d";
+    const appID = 336531024;
+    const serverSecret = "d14b1f0834a19ddc46c89bcd4055bf90";
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
 
     

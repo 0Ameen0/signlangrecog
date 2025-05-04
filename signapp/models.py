@@ -17,7 +17,10 @@ class user_reg(models.Model):
   Contact=models.CharField(max_length=15)
   userid=models.OneToOneField(user_log,on_delete=models.CASCADE, related_name='member_userid')
   img=models.FileField(upload_to='uploads/',default=True)
+  
   meet=models.CharField(max_length=100,default='')
+  meeting_time = models.DateTimeField(null=True, blank=True)      # When meeting was scheduled
+  receiver_id = models.ForeignKey(user_log, on_delete=models.CASCADE, null=True, blank=True, related_name='meeting_receiver')
 
 class community_tab(models.Model):
   community_name=models.CharField(max_length=50)
@@ -44,3 +47,8 @@ class Feedback(models.Model):
   login_id=models.ForeignKey(user_log,on_delete=models.CASCADE)
   current_date=models.DateField(auto_now_add=True)
   feedback=models.CharField(max_length=500)
+
+class meet(models.Model):
+  sender_id=models.ForeignKey(user_log,on_delete=models.CASCADE,related_name='meet_senderid')
+  receiver_id=models.ForeignKey(user_log,on_delete=models.CASCADE,related_name='meet_receiverid')
+  meet_url=models.CharField(max_length=500)     #receiver_meet_url

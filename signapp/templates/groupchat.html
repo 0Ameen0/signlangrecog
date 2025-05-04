@@ -4859,7 +4859,7 @@
                         </div>
                         <!-- /Chat Search -->
                     </div>
-                    <div class="chat-body chat-page-group slimscroll">
+                    <div id="chat-body" class="chat-body chat-page-group slimscroll">
                         <div class="messages">
                             {% for date_label, messages in grouped_messages.items %}
                                 <div class="date-label">{{ date_label }}</div>
@@ -4904,14 +4904,25 @@
                                                 </div>
                                             </div>
                                             <div class="chat-avatar">
+                                                <!-- <img src="{{ message.sender_id.register.img.url }}" class="rounded-circle dreams_chat" alt="image"> -->
+                                                {% if message.sender_id.register.img %}
                                                 <img src="{{ message.sender_id.register.img.url }}" class="rounded-circle dreams_chat" alt="image">
+                                                {% else %}
+                                                <img src="{% static 'chat/assets/img/profiles/default-avatar.png' %}" class="rounded-circle dreams_chat" alt="default avatar">
+                                                {% endif %}
+                                            
                                             </div>
                                         </div>
                                     {% else %}
                                         <!-- Message from other users (Left side) -->
                                         <div class="chats">
                                             <div class="chat-avatar">
-                                                <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="image">
+                                                <!-- <img src="{% static 'chat/assets/img/profiles/avatar-06.jpg' %}" class="rounded-circle" alt="image"> -->
+                                                {% if message.sender_id.register.img %}
+                                                <img src="{{ message.sender_id.register.img.url }}" class="rounded-circle dreams_chat" alt="image">
+                                                {% else %}
+                                                <img src="{% static 'chat/assets/img/profiles/default2.png' %}" class="rounded-circle dreams_chat" alt="default avatar">
+                                                {% endif %}
                                             </div>
                                             <div class="chat-content">
                                                 <div class="chat-profile-name">
@@ -7796,6 +7807,23 @@
     <script src="{% static 'chat/assets/js/script.js' %}" type="5541f23b0a6da4a2cc119b55-text/javascript"></script> 
 	
 <script src="{% static 'chat/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js' %}" data-cf-settings="5541f23b0a6da4a2cc119b55-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"917a1a1beffc72c9","version":"2025.1.0","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"3ca157e612a14eccbb30cf6db6691c29","b":1}' crossorigin="anonymous"></script>
+<script>
+    function scrollToBottom() {
+        var chatBody = document.getElementById("chat-body");
+        if (chatBody) {
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    }
+
+    // Scroll on page load
+    window.addEventListener("load", scrollToBottom);
+
+    // Optional: Scroll when the form is submitted (message sent)
+    document.querySelector(".footer-form").addEventListener("submit", function () {
+        setTimeout(scrollToBottom, 100); // Delay slightly to allow new message render
+    });
+</script>
+
 </body>
 
 <!-- Mirrored from dreamschat.dreamstechnologies.com/html/template/group-chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 25 Feb 2025 19:30:00 GMT -->

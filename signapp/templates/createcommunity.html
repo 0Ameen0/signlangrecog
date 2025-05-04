@@ -72,6 +72,12 @@
       margin-bottom: 5px;
       border-radius: 5px;
     }
+    input + small, textarea + small {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    }
+
   </style>
 </head>
 <body>
@@ -101,5 +107,66 @@
   </ul>
   {% endif %}
   
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector("form");
+      const nameInput = document.getElementById("id_community_name");
+      const descInput = document.getElementById("id_community_desc");
+  
+      function showValidationMessage(input, message, color = "red") {
+        let feedback = input.nextElementSibling;
+        if (!feedback || feedback.tagName !== "SMALL") {
+          feedback = document.createElement("small");
+          input.insertAdjacentElement("afterend", feedback);
+        }
+        feedback.textContent = message;
+        feedback.style.color = color;
+      }
+  
+      function validateName(input) {
+        const value = input.value.trim();
+        if (!value) {
+          showValidationMessage(input, "❌ Name is required");
+          return false;
+        } else if (value.length < 4 || value.length > 15) {
+          showValidationMessage(input, "❌ Name must be 4 to 15 characters long");
+          return false;
+        }
+        showValidationMessage(input, "✅ Name looks good", "green");
+        return true;
+      }
+  
+      function validateDesc(input) {
+        const value = input.value.trim();
+        if (!value) {
+          showValidationMessage(input, "❌ Description is required");
+          return false;
+        } else if (value.length < 15 || value.length > 50) {
+          showValidationMessage(input, "❌ Description must be 15 to 50 characters long");
+          return false;
+        }
+        showValidationMessage(input, "✅ Description looks good", "green");
+        return true;
+      }
+  
+      if (nameInput) nameInput.addEventListener("input", () => validateName(nameInput));
+      if (descInput) descInput.addEventListener("input", () => validateDesc(descInput));
+  
+      form.addEventListener("submit", function (e) {
+        const isNameValid = validateName(nameInput);
+        const isDescValid = validateDesc(descInput);
+  
+        if (!isNameValid || !isDescValid) {
+          e.preventDefault();
+          alert("❌ Please correct the highlighted fields before submitting.");
+        }
+      });
+    });
+  </script>
+  
+  
+  
+  
+
 </body>
 </html>

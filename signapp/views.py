@@ -3,9 +3,10 @@ from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 
 
+#meet
+from .models import meet
 
 # Forms and Models
 from .forms import *
@@ -80,9 +81,14 @@ def UserLogin(request):
 
 # Edit user profile
 def EditUser(request):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     id=request.session['user_id']
     user=get_object_or_404(user_log, id=id)
     register= get_object_or_404(user_reg, userid=user)
+
     if request.method=="POST":
          form=userreg(request.POST,request.FILES,instance=register)
          login=user_edit(request.POST,instance=user)
@@ -98,19 +104,35 @@ def EditUser(request):
 
 # view all users by admin
 def admin_userview(request):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     user=user_reg.objects.all()
     return render(request,'admin_userview.html',{'user':user})
 
 def admin_grpview(request):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     group=community_tab.objects.all()
     return render(request,'admin_grpview.html',{'group':group})
 
 def user_feeds(request):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     feedbacks=Feedback.objects.all().select_related('login_id__member_userid')
     return render(request,'user_feedbacks.html',{'feeds':feedbacks})
 
 # views users for meeting
 def meetings(request):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     current_user = request.session.get('user_id')
     users = user_reg.objects.exclude(id=current_user)
     register=get_object_or_404(user_reg,userid=current_user)
@@ -118,6 +140,10 @@ def meetings(request):
 
 # video call 
 def video(request,user_id):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     users=get_object_or_404(user_reg,id=user_id)
     # user = user_reg.objects.exclude(id=users.id)
     return render(request,"videocall.html",{'user':users})
@@ -125,6 +151,9 @@ def video(request,user_id):
 
 # user page
 def user_in(request):
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     user_id = request.session.get('user_id')
     user = get_object_or_404(user_reg, userid=user_id)
     return render(request,"user_in.html",{'user':user})
@@ -132,6 +161,10 @@ def user_in(request):
 
 # change password
 def change_userpass(request):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
     user_id = request.session.get('user_id')
     user = get_object_or_404(user_log, id=user_id)
 
@@ -168,10 +201,13 @@ def change_userpass(request):
 
 def logouts(request):
     
+    if not request.session.get('user_id'):
+        return redirect('login')
     
     request.session.flush()
     messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
+
 def logout(request):
     # Check if user is logged in
     if not request.session.get('user_id'):
@@ -183,6 +219,10 @@ def logout(request):
 
 # create community
 def community_admin(request):
+
+    if not request.session.get('user_id'):#------------
+        return redirect('login')
+    
     user_id = request.session.get('user_id') 
     logdata=get_object_or_404(user_log,id=user_id)
     
@@ -213,6 +253,9 @@ def view_community(request):
 
 # Edit Community
 def edit_community(request, community_id):
+
+    if not request.session.get('user_id'):
+        return redirect('login')#------------
     user=request.session.get('user_id')
     register=get_object_or_404(user_reg,userid=user)
     community = get_object_or_404(community_tab, id=community_id)
@@ -228,6 +271,9 @@ def edit_community(request, community_id):
 
 # Delete Community
 def delete_community(request, community_id):
+    if not request.session.get('user_id'):
+        return redirect('login')#------------
+    
     community = get_object_or_404(community_tab, id=community_id)
     # if request.method == "POST":
     community.delete()
@@ -235,17 +281,34 @@ def delete_community(request, community_id):
     return redirect('view_community')
     # return render(request, 'delete_community.html', {'community': community})
 
+def del_community(request, community_id):
+
+    if not request.session.get('user_id'):
+        return redirect('login')#------------
+    
+    community = get_object_or_404(community_tab, id=community_id)
+    community.delete()
+    return redirect('admin_grptable')
+
 # view all users
 def view_user(request,community_id):
+    if not request.session.get('user_id'):
+        return redirect('login')#------------
+    user=request.session.get('user_id')
+    register=get_object_or_404(user_reg,userid=user)
+
     current_user = request.session.get('user_id')
     comm_id=community_tab.objects.get(id=community_id)
     users = user_reg.objects.exclude(id=current_user)
     mem=community_member.objects.filter(community_id=comm_id)
     member_ids = mem.values_list('member_id', flat=True)
-    return render(request, 'view_user.html', {'users': users,'comm_id':comm_id,'mem':member_ids})
+    return render(request, 'view_user.html', {'users': users,'comm_id':comm_id,'mem':member_ids,'register':register})
 
 # #add member demo
 def add_member(request, community_id, user_id):
+    if not request.session.get('user_id'):
+        return redirect('login')#------------
+    
     user=request.session.get('user_id')
     comm_id = community_tab.objects.get(id=community_id)
     useid = user_log.objects.get(id=user_id)
@@ -263,6 +326,9 @@ def add_member(request, community_id, user_id):
 
 # view Community member demo
 def view_member(request, community_id):
+    if not request.session.get('user_id'):
+        return redirect('login')#------------
+    
     user=request.session.get('user_id')
     comm = community_member.objects.filter(community_id=community_id).select_related('member_id__member_userid')
     print(comm)
@@ -285,6 +351,7 @@ def view_member(request, community_id):
 
 def delete_member(request, community_id, cmid):
     # Get the current logged-in user
+
     user_id = request.session.get('user_id')
     if not user_id:
         return redirect('login')
@@ -305,54 +372,17 @@ def delete_member(request, community_id, cmid):
     messages.success(request, "Member removed successfully.")
     return redirect('view_member', community_id=community_id)
 
+def delete_user(request, user_id):
+    if not request.session.get('user_id'):
+        return redirect('login')#------------
+    
+    user = get_object_or_404(user_log, id=user_id)
+    
+    user.delete()
+    messages.success(request, "User deleted successfully.")
+    return redirect('admin_usertable')
 
 
-
-
-#demo chat
-# def chats(request, community_id):
-#     user_id = request.session.get('user_id')  # Get the logged-in user
-#     if not user_id:
-#         return redirect('login')
-
-#     usergg = get_object_or_404(user_log, id=user_id)
-#     community = get_object_or_404(community_tab, id=community_id)
-
-#     # Fetch member count for the current community
-#     member_count = community_member.objects.filter(community_id=community).count()
-#     comm = community_member.objects.filter(community_id=community).select_related('member_id__member_userid')
-#     print(comm)
-#     # Fetch all communities the user is a member of, an admin of, or has created
-#     member_communities = community_member.objects.filter(member_id=usergg).values_list('community_id', flat=True)
-#     admin_communities = community_member.objects.filter(admin_id=usergg).values_list('community_id', flat=True)
-#     created_communities = community_tab.objects.filter(userid=usergg).values_list('id', flat=True)
-#     all_community_ids = set(member_communities) | set(admin_communities) | set(created_communities)
-#     all_communities = community_tab.objects.filter(id__in=all_community_ids)
-
-#     if request.method == "POST":
-#         form = UserChatForm(request.POST)
-#         if form.is_valid():
-#             chat = form.save(commit=False)
-#             chat.sender_id = usergg
-#             chat.receiver_id = community
-#             chat.save()
-#             messages.success(request, "Message sent successfully")
-#             return redirect('chat', community_id=community_id)
-#     else:
-#         form = UserChatForm()
-
-#     # Fetch chat history
-#     messages_list = UserChat.objects.filter(receiver_id=community).order_by('date', 'time')
-
-#     return render(request, 'groupchat.html', {
-#         'form': form,
-#         'messages': messages_list,
-#         'community': community,
-#         'user': usergg,
-#         'member_count': member_count,
-#         'all_communities': all_communities,
-#         'comm' :comm # Pass the combined queryset
-#     })
 
 # demo_chat_2
 
@@ -382,11 +412,6 @@ def chats(request, community_id):
             chat.sender_id = usergg
             chat.receiver_id = community
 
-            # Check if there's a reply
-            # reply_to_id = request.POST.get('reply_to_id')
-            # if reply_to_id:
-            #     chat.reply_to_id = UserChat.objects.get(id=reply_to_id)  # Set the reply_to field to the actual message object 
-            
             reply_to_id = request.POST.get('reply_to_id')
             if reply_to_id:
                 try:
@@ -437,6 +462,7 @@ def community(request):
     user_id = request.session.get('user_id')
     if not user_id:
         return redirect('login') 
+    
     user = get_object_or_404(user_log, id=user_id)
     register = get_object_or_404(user_reg, userid=user)
     # Fetch all community IDs where the user is a member, admin, or creator
@@ -453,7 +479,12 @@ def community(request):
 
 
 def exit_group(request, community_id):
-    print(community_id)
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
+    # print(community_id)
+
     user_id = request.session.get('user_id')
     user = get_object_or_404(user_log, id=user_id)
     community = get_object_or_404(community_tab, id=community_id)
@@ -479,15 +510,28 @@ def exit_group(request, community_id):
 
 @csrf_exempt  
 def save_video_url(request, id):
+
+    if not request.session.get('user_id'):
+        return redirect('login')
+    
+    user_id=request.session.get('user_id')
+    user = get_object_or_404(user_log, id=user_id)
+
     if request.method == 'POST':
         data = json.loads(request.body)
         url = data.get('url')
 
         if url:
-            appointment = get_object_or_404(user_reg, id=id)
+
+            # Get receiver's user_log using the 'id' from URL
+            receiver_user = get_object_or_404(user_log, id=id)
+
+            appointment = get_object_or_404(user_reg, userid=user_id)
             
+            # meet.objects.create(sender_id=user,receiver_id=appointment,meet_url=url)
             appointment.meet = url
-            
+            appointment.meeting_time = now() 
+            appointment.receiver_id = receiver_user
             appointment.save()
 
             return JsonResponse({'success': True, 'message': 'URL saved successfully'})
@@ -496,55 +540,8 @@ def save_video_url(request, id):
 
     return JsonResponse({'success': False, 'message': 'Invalid request'}, status=400)
 
-# Forgot Password View
-# def forgot_password(request):
-#     if request.method == 'POST':
-#         email = request.POST.get('email')
-#         try:
-#             user = user_log.objects.get(Email=email)
-#             token = default_token_generator.make_token(user)
-#             uid = urlsafe_base64_encode(force_bytes(user.pk))
-#             reset_link = request.build_absolute_uri(
-#                 f'/reset-password/{uid}/{token}/'
-#             )
-#             send_mail(
-#                 subject="Password Reset Request",
-#                 message=f"Click the link to reset your password: {reset_link}",
-#                 from_email='your_email@gmail.com',  # Replace with your Gmail address
-#                 recipient_list=[email],
-#             )
-#             messages.success(request, "Password reset link sent to your email.")
-#         except user_log.DoesNotExist:
-#             messages.error(request, "No account found with this email.")
-#     return render(request, 'forgot_password.html')
 
 
-# def forgot_password(request):
-#     if request.method == 'POST':
-#         email = request.POST.get('email')
-#         try:
-#             user = user_log.objects.get(Email=email)
-#             token = default_token_generator.make_token(user)
-#             uid = urlsafe_base64_encode(force_bytes(user.pk))
-#             reset_link = request.build_absolute_uri(f'/reset-password/{uid}/{token}/')
-
-#             # Send the email
-#             try:
-#                 send_mail(
-#                     subject="Password Reset Request",
-#                     message=f"Hi,\n\nClick the link below to reset your password:\n{reset_link}\n\nIf you didn’t request this, ignore this email.",
-#                     from_email='signify4u@gmail.com',  # Must match your settings.py email config
-#                     recipient_list=[email],
-#                     fail_silently=False,
-#                 )
-#                 messages.success(request, "Password reset link sent to your email.")
-#             except Exception as e:
-#                 messages.error(request, f"Email sending failed: {str(e)}")
-#         except user_log.DoesNotExist:
-#             messages.error(request, "No account found with this email.")
-
-#     return render(request, 'forgot_password.html')
-# # views.py
 import random
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -601,28 +598,6 @@ def reset_password_view(request):
         else:
             messages.error(request, 'Passwords do not match.')
     return render(request, 'resets_password.html')
-# Reset Password View
-# def reset_password(request, uidb64, token):
-#     if request.method == 'POST':
-#         new_password = request.POST.get('password')
-#         confirm_password = request.POST.get('confirm_password')
-#         if new_password == confirm_password:
-#             try:
-#                 uid = force_str(urlsafe_base64_decode(uidb64))
-#                 user = user_log.objects.get(pk=uid)
-#                 if default_token_generator.check_token(user, token):
-#                     user.Password = new_password  # Save the new password
-#                     user.save()
-#                     messages.success(request, "Password updated successfully.")
-#                     return redirect('login')  # Redirect to your login page
-#                 else:
-#                     messages.error(request, "Invalid token or link expired.")
-#             except Exception as e:
-#                 messages.error(request, "Something went wrong.")
-#         else:
-#             messages.error(request, "Passwords do not match.")
-#     return render(request, 'reset_password.html')
-
 
 
 def submit_feedback(request):

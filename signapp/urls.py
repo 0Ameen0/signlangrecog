@@ -24,16 +24,19 @@ urlpatterns = [
     path('view_community/',views.view_community,name="view_community"),
     path('edit_community/<int:community_id>/', views.edit_community, name="edit_community"),
     path('delete_community/<int:community_id>/', views.delete_community, name="delete_community"),
+    path('del_community/<int:community_id>/',views.del_community,name="del_community"),
 
     path('view_user/<int:community_id>/',views.view_user,name="view_user"),
     path('add_member/<int:community_id>/<int:user_id>/',views.add_member,name="add_member"),
     path('view_member/<int:community_id>/',views.view_member,name="view_member"),
     path('delete_member/<int:community_id>/<int:cmid>/',views.delete_member,name="delete_member"),
+    path('delete_user/<int:user_id>/',views.delete_user,name="delete_user"),
 
     path('chat/<int:community_id>/',views.chats,name="chat"),
     path('community/',views.community,name="community"), 
     path('exitgroup/<int:community_id>/',views.exit_group,name="exit_group"),
     path('save_video_url/<int:id>/',views.save_video_url,name="save_video_url"),
+    
 
     path('forgot-password/', views.forgot_password, name='forgot_password'),
     path('verify-otp/', views.verify_otp_view, name='verify_otp'),

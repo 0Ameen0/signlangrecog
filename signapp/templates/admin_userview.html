@@ -804,6 +804,7 @@
                                                     <th>Gender</th>
                                                     <th>Contact</th>
                                                     <th>Email</th>
+                                                    <th>Delete</th>
                                                 </tr>
                                             </thead>
                                         
@@ -815,6 +816,13 @@
                                                     <td>{{users.Gender}}</td>
                                                     <td>{{users.Contact}}</td>
                                                     <td>{{users.userid.Email}}</td>
+                                                    
+                                                    <td data-label="Delete">
+                                                        <a href="{% url 'delete_user' users.id %}"
+                                                          onclick="return confirm('Are you sure you want to delete this member?');">
+                                                          <i class="fa-solid fa-trash"></i>
+                                                        </a>
+                                                    </td>
                                                     
                                                 </tr>
                                               {% endfor %}
